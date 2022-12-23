@@ -1260,12 +1260,6 @@ select {
 .underline {
   text-decoration-line: underline;
 }
-.decoration-indigo-500 {
-  text-decoration-color: #6366f1;
-}
-.decoration-green-500 {
-  text-decoration-color: #22c55e;
-}
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
