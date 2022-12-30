@@ -64,10 +64,14 @@ class UnitController extends Controller
      */
     public function show(Unit $unit)
     {
+
+        // return response()->json($unit->readings()->get());
         return Inertia::render(
             'Units/Show',
             [
                 'unit' => $unit,
+                'readings' => $unit->readings()->get() ,
+                'apartment' => $unit->apartment()->first()
             ]
         );
     }

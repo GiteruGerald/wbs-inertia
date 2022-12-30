@@ -68,6 +68,7 @@ class WaterReadingController extends Controller
             'Readings/Show',
             [
                 'reading' => $reading,
+                'unit'=> $reading->unit()->first()
             ]
         );
     }

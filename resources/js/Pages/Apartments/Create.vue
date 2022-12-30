@@ -1,10 +1,10 @@
 <template>
-    <Head title="Units" />
+    <Head title="Apartments" />
   
     <BreezeAuthenticatedLayout>
       <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Units Create
+          Apartments Create
         </h2>
       </template>
   
@@ -41,7 +41,7 @@
                   shadow-md
                 "
               >
-                <form @submit.prevent="storeUnit">
+                <form @submit.prevent="storeApartment">
                   <div class="shadow sm:overflow-hidden sm:rounded-md">
                     <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
                       <div>
@@ -162,10 +162,10 @@
     location: null,
   });
   
-  const storeUnit = () => {
+  const storeApartment = () => {
     processing.value = true;
   
-    form.post("/units");
+    form.post("/apartments");
   };
   </script>
   
