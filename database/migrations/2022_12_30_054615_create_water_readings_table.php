@@ -20,7 +20,7 @@ class CreateWaterReadingsTable extends Migration
 
             $table->string('previous');
             $table->string('current');
-            $table->string('rate');
+            $table->integer('rate');
             $table->string('month');
             $table->timestamps();
         });

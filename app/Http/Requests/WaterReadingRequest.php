@@ -24,7 +24,11 @@ class WaterReadingRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+                'previous'=> 'required|numeric',
+                'current'=> 'required|string',
+                'month'=> 'required|string',
+                'rate'=> 'required|digits',
+                'unit_id'=> 'required|integer|exists:unit,id',
         ];
     }
 }

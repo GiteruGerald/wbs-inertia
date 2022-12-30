@@ -103,7 +103,7 @@ class UnitController extends Controller
         return Redirect::route('units.index');
     }
 
-    /**
+/**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Unit  $unit

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WaterReadingRequest;
+use App\Http\Resources\UnitResource;
+use App\Http\Resources\WaterReadingResource;
 use App\Models\WaterReading;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class WaterReadingController extends Controller
 {
@@ -14,7 +18,12 @@ class WaterReadingController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render(
+            'Readings/Index',
+            [
+                'readings' => WaterReadingResource::collection(WaterReading::all())
+            ]
+        );
     }
 
     /**
@@ -24,7 +33,12 @@ class WaterReadingController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render(
+            'Readings/Create',
+            [
+                'units' => UnitResource::collection(Unit::all()),
+            ]
+        );
     }
 
     /**
@@ -33,9 +47,11 @@ class WaterReadingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(WaterReadingRequest $request)
     {
-        //
+        $waterReading= WaterReading::create($request->validated());
+
+        return Redirect::route('readings.index');
     }
 
     /**
@@ -46,7 +62,12 @@ class WaterReadingController extends Controller
      */
     public function show(WaterReading $waterReading)
     {
-        //
+        return Inertia::render(
+            'Readings/Show',
+            [
+                'reading' => $waterReading,
+            ]
+        );
     }
 
     /**
@@ -57,7 +78,13 @@ class WaterReadingController extends Controller
      */
     public function edit(WaterReading $waterReading)
     {
-        //
+        return Inertia::render(
+            'Readings/Show',
+            [
+                'reading' => $waterReading,
+                'units' => UnitResource::collection(Unit::all()),
+            ]
+        );
     }
 
     /**
@@ -67,9 +94,11 @@ class WaterReadingController extends Controller
      * @param  \App\Models\WaterReading  $waterReading
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, WaterReading $waterReading)
+    public function update(WaterReadingRequest $request, WaterReading $waterReading)
     {
-        //
+        $waterReading->update($request->validated());
+
+        return Redirect::route('readings.index');
     }
 
     /**
@@ -80,6 +109,8 @@ class WaterReadingController extends Controller
      */
     public function destroy(WaterReading $waterReading)
     {
-        //
+        $waterReading->delete();
+        return Redirect::route('readings.index');
+    }
     }
 }

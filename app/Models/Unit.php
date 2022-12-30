@@ -16,4 +16,9 @@ class Unit extends Model
         return $this->belongsTo(Apartment::class);
     }
 
+    public function readings()
+    {
+        return $this->hasMany(WaterReading::class);
+    }
+
 }
