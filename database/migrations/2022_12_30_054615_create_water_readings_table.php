@@ -18,10 +18,11 @@ class CreateWaterReadingsTable extends Migration
             $table->unsignedBigInteger('unit_id');
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
 
-            $table->string('previous');
-            $table->string('current');
-            $table->integer('rate');
+            $table->mediumInteger('previous');
+            $table->mediumInteger('current');
+            $table->double('rate');
             $table->string('month');
+            // $table->string('year');
             $table->timestamps();
         });
     }

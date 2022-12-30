@@ -13,7 +13,7 @@ class WaterReadingRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,11 +24,18 @@ class WaterReadingRequest extends FormRequest
     public function rules()
     {
         return [
-                'previous'=> 'required|numeric',
-                'current'=> 'required|string',
-                'month'=> 'required|string',
-                'rate'=> 'required|digits',
-                'unit_id'=> 'required|integer|exists:unit,id',
+            'previous' => 'required|numeric|lte:current',
+            'current' => 'required|numeric|gte:previous',
+            'month' => 'required|string',
+            'rate' => 'required|numeric',
+            'unit_id' => 'required|integer|exists:units,id',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'current.gt' => 'The current reading must be greater than or equal to the previous reading ',
         ];
     }
 }
