@@ -10,9 +10,9 @@
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="flex m-2 p-2">
-          <Link
-            href="/readings"
+        <div class="flex justify-between m-2 p-2">
+          <div><Link
+            href="/readings" 
             class="
               px-4
               py-2
@@ -22,7 +22,24 @@
               rounded
             "
             >Back</Link
+          ></div>
+          <div></div>
+          <div>
+            <Link
+            href="/#" 
+            class="
+              px-4
+              py-2
+              bg-green-500
+              hover:bg-green-600
+              text-white
+              rounded
+            "
+            disabled
+            > Print</Link
           >
+          </div>
+          
         </div>
         <div class="flex">
           <div class="container px-5 mx-auto flex">
