@@ -1,8 +1,10 @@
 # Open Source Water Bills Management 
 
-### Installation
-
-#### Backend
+###Features
+> Apartments Manager
+>> Apartment->Unit Manager
+>> Apartment->Unit->Water Readings Manager
+#### Installation
 1. Clone the project
 2. Go to the project root directory
 3. Run `composer install`
