@@ -64,11 +64,15 @@ class WaterReadingController extends Controller
      */
     public function show(WaterReading $reading)
     {
+        $unit = $reading->unit()->first();
+        $apartment = $unit->apartment()->first();
+        
         return Inertia::render(
             'Readings/Show',
             [
                 'reading' => $reading,
-                'unit'=> $reading->unit()->first()
+                'unit'=> $unit,
+                'apartment'=> $apartment,
             ]
         );
     }

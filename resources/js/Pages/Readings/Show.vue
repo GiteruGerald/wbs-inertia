@@ -11,35 +11,36 @@
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="flex justify-between m-2 p-2">
-          <div><Link
-            href="/readings" 
-            class="
-              px-4
-              py-2
-              bg-indigo-500
-              hover:bg-indigo-600
-              text-white
-              rounded
-            "
-            >Back</Link
-          ></div>
-          <div></div>
           <div>
             <Link
-            href="/#" 
-            class="
-              px-4
-              py-2
-              bg-green-500
-              hover:bg-green-600
-              text-white
-              rounded
-            "
-            disabled
-            > Print</Link
-          >
+              href="/readings"
+              class="
+                px-4
+                py-2
+                bg-indigo-500
+                hover:bg-indigo-600
+                text-white
+                rounded
+              "
+              >Back</Link
+            >
           </div>
-          
+          <div></div>
+          <div>
+            <button
+              class="
+                px-4
+                py-2
+                bg-green-500
+                hover:bg-green-600
+                text-white
+                rounded
+              "
+              @click="printComponent()"
+            >
+              Print
+            </button>
+          </div>
         </div>
         <div class="flex">
           <div class="container px-5 mx-auto flex">
@@ -62,15 +63,15 @@
                 <!-- Reading Details -->
                 <div>
                   <div>
-                  <div class="px-4 py-5 sm:px-6">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900">
-                      Unit: {{ unit.unit_no }}
-                    </h3>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                      Unit details.
-                    </p>
+                    <div class="px-4 py-5 sm:px-6">
+                      <h3 class="text-lg font-medium leading-6 text-gray-900">
+                        Unit: {{ unit.unit_no }} | {{ apartment.name }}
+                      </h3>
+                      <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                        Unit details.
+                      </p>
+                    </div>
                   </div>
-                </div>
                 </div>
                 <hr />
                 <div
@@ -86,48 +87,72 @@
                     {{ unit.meter_no }}
                   </dd>
                 </div>
-                <div
-                  class="
-                    px-4
-                    py-5
-                    sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-                  "
-                >
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt class="text-sm font-medium text-gray-500">Month</dt>
                   <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     {{ reading.month }}
                   </dd>
                 </div>
 
-                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt class="text-sm font-medium text-gray-500">Previous Reading</dt>
+                <div
+                  class="
+                    bg-gray-50
+                    px-4
+                    py-5
+                    sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+                  "
+                >
+                  <dt class="text-sm font-medium text-gray-500">
+                    Previous Reading
+                  </dt>
                   <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     {{ reading.previous }}
                   </dd>
                 </div>
-                <div class=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt class="text-sm font-medium text-gray-500">Current Reading</dt>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt class="text-sm font-medium text-gray-500">
+                    Current Reading
+                  </dt>
                   <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     {{ reading.current }}
                   </dd>
                 </div>
-                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt class="text-sm font-medium text-gray-500">Units Consumed</dt>
+                <div
+                  class="
+                    bg-gray-50
+                    px-4
+                    py-5
+                    sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+                  "
+                >
+                  <dt class="text-sm font-medium text-gray-500">
+                    Units Consumed
+                  </dt>
                   <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     {{ unitsConsumed(reading.previous, reading.current) }}
                   </dd>
                 </div>
                 <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt class="text-sm font-medium text-gray-500">Rate Per Unit</dt>
+                  <dt class="text-sm font-medium text-gray-500">
+                    Rate Per Unit
+                  </dt>
                   <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     {{ reading.rate }}
                   </dd>
                 </div>
-                <hr>
+                <hr />
                 <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt class="text-sm font-medium text-black-500">Amount Charged</dt>
+                  <dt class="text-sm font-medium text-black-500">
+                    Amount Charged
+                  </dt>
                   <dd class="mt-1 text-sm text-black-900 sm:col-span-2 sm:mt-0">
-                    {{ chargeAmount(reading.current,reading.previous,reading.rate ) }}
+                    {{
+                      chargeAmount(
+                        reading.current,
+                        reading.previous,
+                        reading.rate
+                      )
+                    }}
                   </dd>
                 </div>
               </div>
@@ -136,7 +161,6 @@
 
           <div></div>
         </div>
-        
       </div>
     </div>
   </BreezeAuthenticatedLayout>
@@ -147,18 +171,23 @@ import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import { HomeIcon } from "@heroicons/vue/20/solid";
 import { ref } from "vue";
-import useHelper  from "../../composables/helper";
+import useHelper from "../../composables/helper";
 
-const { unitsConsumed, chargeAmount } =  useHelper()
+const { unitsConsumed, chargeAmount } = useHelper();
 
 const props = defineProps({
-  unit: Object,
   reading: Object,
+  unit: Object,
+  apartment: Object,
 });
 
 const storeAgreement = () => {
   processing.value = true;
   form.post("/agreements");
 };
+
+const printComponent = ()=>{
+  window.print()
+}
 </script>
   
