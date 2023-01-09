@@ -12,7 +12,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div class="flex m-2 p-2">
             <Link
-              href="/readings"
+              :href="route('readings.index')"
               class="
                 px-4
                 py-2

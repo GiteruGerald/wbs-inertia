@@ -1,5 +1,5 @@
 <template>
-  <Head title="Readings" />
+  <Head title="Readings |" />
 
   <BreezeAuthenticatedLayout>
     <template #header>
@@ -42,7 +42,7 @@
             </button>
           </div>
         </div>
-        <div class="flex">
+        <div class="flex print-container">
           <div class="container px-5 mx-auto flex">
             <div
               class="
@@ -59,7 +59,7 @@
                 shadow-md
               "
             >
-              <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+              <div class="overflow-hidden bg-white shadow sm:rounded-lg" ref="receipt">
                 <!-- Reading Details -->
                 <div>
                   <div>
@@ -169,12 +169,19 @@
   <script setup>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 import { HomeIcon } from "@heroicons/vue/20/solid";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import useHelper from "../../composables/helper";
 
 const { unitsConsumed, chargeAmount } = useHelper();
 
+const receipt= ref(null)
+
+onMounted(()=>{
+
+  console.log(receipt.value)
+})
 const props = defineProps({
   reading: Object,
   unit: Object,
@@ -187,7 +194,28 @@ const storeAgreement = () => {
 };
 
 const printComponent = ()=>{
-  window.print()
+  
+  window.print(receipt.value)
+  // Inertia.post("https://invoice-generator.com",{
+  //   date:new Date
+  // }) 
 }
 </script>
   
+<style scoped>
+
+@media print{
+  body *{
+    visibility: hidden;
+  }
+  .print-container, .print-container *{
+    visibility: visible;
+  }
+  .print-container{
+    position: absolute;
+    left: 0px;
+    width:100%;
+    top: 0px;
+  }
+}
+</style>

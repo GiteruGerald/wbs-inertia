@@ -10,21 +10,41 @@
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="flex justify-end m-2 p-2">
-          <Link
-            href="/readings/create"
-            class="
-              px-4
-              py-2
-              bg-indigo-500
-              hover:bg-indigo-600
-              text-white
-              rounded
-            "
-            >Add Reading</Link
-          >
+        <div class="flex justify-between m-2 p-2">
+          <div>
+            <button
+              class="
+                px-4
+                py-2
+                bg-green-500
+                hover:bg-green-600
+                text-white
+                rounded
+              "
+              @click="printComponent()"
+            >
+              Print
+            </button>
+          </div>
+          <div>
+            <Link
+              href="/readings/create"
+              class="
+                px-4
+                py-2
+                bg-indigo-500
+                hover:bg-indigo-600
+                text-white
+                rounded
+              "
+              >Add Reading</Link
+            >
+          </div>
         </div>
-        <div class="flex flex-col">
+        <div class="flex flex-col" v-if="!readings.data">
+          <p>No reading details added</p>
+          </div>
+        <div class="flex flex-col print-container" ref="printable" v-else>
           <div
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
@@ -141,7 +161,10 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="reading in readings.data" :key="reading.id">
+                  <tr v-if="!readings.data">
+                    <p>No details found</p>
+                    </tr>
+                  <tr v-for="reading in readings.data" :key="reading.id" v-else>
                     <td class="px-6 py-4 whitespace-nowrap">
                       {{ reading.unit.unit_no }}
                     </td>
@@ -160,7 +183,7 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                       {{ chargeAmount(reading.current,reading.previous, reading.rate) }}
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
+                    <td class="px-6 py-4 whitespace-nowrap links">
                       <Link
                         :href="`/readings/${reading.id}`"
                         class="text-green-600 hover:text-indigo-900"
@@ -196,14 +219,38 @@
     <script setup>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import { computed } from "@vue/runtime-core";
+import { ref } from "vue";
 import useHelper  from "../../composables/helper";
 
 const props = defineProps({
   readings: Object,
 });
 
+const printable = ref(null)
 
 const { unitsConsumed, chargeAmount } =  useHelper()
+
+const printComponent = ()=>{
+  window.print(printable.value)
+}
 </script>
     
+<style scoped>
+@media print{
+  body *{
+    visibility: hidden;
+  }
+
+  .links {
+    visibility: hidden;
+  }
+  .print-container, .print-container *{
+    visibility: visible;
+  }
+  .print-container{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  }
+}
+</style>

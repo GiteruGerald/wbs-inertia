@@ -20,10 +20,13 @@ class WaterReadingController extends Controller
      */
     public function index()
     {
+        // return WaterReading::with('unit')->latest()->get();
+        // return WaterReadingResource::collection(WaterReading::with('unit')->latest()->get());
         return Inertia::render(
             'Readings/Index',
             [
                 'readings' => WaterReadingResource::collection(WaterReading::with('unit')->latest()->get())
+                // 'readings' => WaterReading::with('unit')->latest()->get()
             ]
         );
     }
@@ -118,6 +121,11 @@ class WaterReadingController extends Controller
     {
         $reading->delete();
         return Redirect::route('readings.index');
+        
+    }
     
+    public function print(WaterReading $reading)
+    {
+        
     }
 }

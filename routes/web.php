@@ -18,7 +18,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
+Route::get('/admin-dash', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -31,7 +31,7 @@ Route::get('/', function () {
 Route::resource('apartments', ApartmentController::class);
 Route::resource('units', UnitController::class);
 Route::resource('readings', WaterReadingController::class);
-
+Route::get('readings/{reading}/print', [WaterReadingController::class,'print']);
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
