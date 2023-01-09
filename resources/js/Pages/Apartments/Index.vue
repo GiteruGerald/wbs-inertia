@@ -140,7 +140,7 @@
                       {{ apartment.location }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      <!-- {{ apartment.unitsCo }} -->
+                      {{ apartment.units }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <Link

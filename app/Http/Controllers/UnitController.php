@@ -23,19 +23,20 @@ class UnitController extends Controller
 
         $units = UnitResource::collection(
             Unit::query()
-                ->join('apartments', 'units.apartment_id','=','apartments.id')
-                ->when($request->input('search'), function($query, $search){
-                    $query
-                        ->where('unit_no','like',"%{$search}%")
-                        ->orWhere('name','like',"%{$search}%")
-                    ;
-                })
-                ->with('apartment')->get());
+            ->when($request->input('search'), function($query, $search){
+                $query
+                    ->join('apartments', 'units.apartment_id','=','apartments.id')
+                    ->select('units.*')
+                            ->where('unit_no','like',"%{$search}%")
+                            ->orWhere('name','like',"%{$search}%")
+                        ;
+                    })
+            ->with('apartment')->get());
+            
         return Inertia::render(
             'Units/Index',
             [
                 'units' => $units,
-                // 'units' => UnitResource::collection(Unit::with('apartment')->get()),
             ]
         );
     }

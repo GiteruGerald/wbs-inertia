@@ -26,9 +26,12 @@ class ApartmentController extends Controller
             ->paginate(10)
             ->withQueryString()
             ->through(fn($apartment)=>[
+                'id' => $apartment->id,
                 'name' => $apartment->name,
                 'location' => $apartment->location,
+                'units' => $apartment->units()->count(),
             ]);
+
         // return response()->json($apartments);
         return Inertia::render('Apartments/Index',
         [
