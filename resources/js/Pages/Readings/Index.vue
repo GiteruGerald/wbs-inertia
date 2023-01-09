@@ -27,6 +27,19 @@
             </button>
           </div>
           <div>
+            <select
+              class="form-control"
+              id=""
+              v-model="sort"
+              @change="sortValue"
+            >
+              <option value="">--Filter By Type--</option>
+              <option value="Residential">Residential</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Industrial">Industrial</option>
+            </select>
+          </div>
+          <div>
             <Link
               href="/readings/create"
               class="
@@ -43,7 +56,7 @@
         </div>
         <div class="flex flex-col" v-if="!readings.data">
           <p>No reading details added</p>
-          </div>
+        </div>
         <div class="flex flex-col print-container" ref="printable" v-else>
           <div
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
@@ -163,7 +176,7 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                   <tr v-if="!readings.data">
                     <p>No details found</p>
-                    </tr>
+                  </tr>
                   <tr v-for="reading in readings.data" :key="reading.id" v-else>
                     <td class="px-6 py-4 whitespace-nowrap">
                       {{ reading.unit.unit_no }}
@@ -175,13 +188,19 @@
                       {{ reading.month }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ unitsConsumed(reading.previous, reading.current) }}
+                      {{ unitsConsumed(reading.previous, reading.current) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       {{ reading.rate }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      {{ chargeAmount(reading.current,reading.previous, reading.rate) }}
+                      {{
+                        chargeAmount(
+                          reading.current,
+                          reading.previous,
+                          reading.rate
+                        )
+                      }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap links">
                       <Link
@@ -220,34 +239,41 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
-import useHelper  from "../../composables/helper";
+import useHelper from "../../composables/helper";
 
 const props = defineProps({
   readings: Object,
 });
 
-const printable = ref(null)
+const printable = ref(null);
+const sort = ref("");
 
-const { unitsConsumed, chargeAmount } =  useHelper()
+const { unitsConsumed, chargeAmount, filterByApartment } = useHelper();
 
-const printComponent = ()=>{
-  window.print(printable.value)
+const printComponent = () => {
+  window.print(printable.value);
+};
+
+const sortValue = async () => {
+  await filterByApartment(sort.value)
 }
+
 </script>
     
 <style scoped>
-@media print{
-  body *{
+@media print {
+  body * {
     visibility: hidden;
   }
 
   .links {
     visibility: hidden;
   }
-  .print-container, .print-container *{
+  .print-container,
+  .print-container * {
     visibility: visible;
   }
-  .print-container{
+  .print-container {
     position: absolute;
     left: 0px;
     top: 0px;

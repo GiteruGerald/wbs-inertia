@@ -16,12 +16,25 @@ class ApartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $apartments = Apartment::query()
+            ->when($request->input('search'), function($query, $search){
+                $query->where('name','like', "%{$search}%");
+            })
+            ->paginate(10)
+            ->withQueryString()
+            ->through(fn($apartment)=>[
+                'name' => $apartment->name,
+                'location' => $apartment->location,
+            ]);
+        // return response()->json($apartments);
         return Inertia::render('Apartments/Index',
         [
-            'apartments' => ApartmentResource::collection(Apartment::all()),
-            // 'apartments' => Apartment::all(),
+            // 'apartments' => ApartmentResource::collection(Apartment::all()),
+            'apartments' => $apartments,
+            'filters' => $request->only(['search'])
         ]);
     }
 

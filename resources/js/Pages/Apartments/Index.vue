@@ -10,19 +10,38 @@
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="flex justify-end m-2 p-2">
-          <Link
-            href="/apartments/create"
-            class="
-              px-4
-              py-2
-              bg-indigo-500
-              hover:bg-indigo-600
-              text-white
-              rounded
-            "
-            >Create Apartment</Link
-          >
+        <div class="flex justify-between m-2 p-2">
+          <div>
+            <input
+              type="text"
+              v-model="search"
+              class="
+                block
+                w-full
+                flex-1
+                rounded-none rounded-r-md
+                border-gray-300
+                focus:border-indigo-500 focus:ring-indigo-500
+                sm:text-sm
+              "
+              placeholder="Name of Apartment"
+            />
+          </div>
+          <div></div>
+          <div>
+            <Link
+              href="/apartments/create"
+              class="
+                px-4
+                py-2
+                bg-indigo-500
+                hover:bg-indigo-600
+                text-white
+                rounded
+              "
+              >Create Apartment</Link
+            >
+          </div>
         </div>
         <div class="flex flex-col">
           <div
@@ -158,10 +177,25 @@
   
   <script setup>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
+import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
+import { ref, watch } from "vue";
 
 const props = defineProps({
   apartments: Object,
+  filters: Object,
 });
+
+const search = ref(props.filters.search);
+
+watch(search, value =>{
+  Inertia.get('/apartments',{
+    search:value
+  },
+  {
+  preserveState:true,
+  replace:true
+  })
+})
 </script>
   

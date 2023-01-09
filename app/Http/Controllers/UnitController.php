@@ -18,12 +18,24 @@ class UnitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $units = UnitResource::collection(
+            Unit::query()
+                ->join('apartments', 'units.apartment_id','=','apartments.id')
+                ->when($request->input('search'), function($query, $search){
+                    $query
+                        ->where('unit_no','like',"%{$search}%")
+                        ->orWhere('name','like',"%{$search}%")
+                    ;
+                })
+                ->with('apartment')->get());
         return Inertia::render(
             'Units/Index',
             [
-                'units' => UnitResource::collection(Unit::with('apartment')->get()),
+                'units' => $units,
+                // 'units' => UnitResource::collection(Unit::with('apartment')->get()),
             ]
         );
     }

@@ -10,19 +10,40 @@
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="flex justify-end m-2 p-2">
-          <Link
-            href="/units/create"
-            class="
-              px-4
-              py-2
-              bg-indigo-500
-              hover:bg-indigo-600
-              text-white
-              rounded
-            "
-            >Create Unit</Link
-          >
+        <div class="flex justify-between m-2 p-2">
+          <div>
+            <input
+              type="text"
+              v-model="search"
+              class="
+                block
+                w-full
+                flex-1
+                rounded-none rounded-r-md
+                border-gray-300
+                focus:border-indigo-500 focus:ring-indigo-500
+                sm:text-sm
+              "
+              placeholder="Search Unit\Apartment Name"
+            />
+          </div>
+          <div>
+            
+          </div>
+          <div>
+            <Link
+              href="/units/create"
+              class="
+                px-4
+                py-2
+                bg-indigo-500
+                hover:bg-indigo-600
+                text-white
+                rounded
+              "
+              >Create Unit</Link
+            >
+          </div>
         </div>
         <div class="flex flex-col">
           <div
@@ -34,7 +55,8 @@
                 overflow-hidden
                 border-b border-gray-200
                 sm:rounded-lg
-              ">
+              "
+            >
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
@@ -144,9 +166,27 @@
   <script setup>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
+import useHelper from "../../composables/helper";
+
+import { ref, watch } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
   units: Object,
 });
+const sort = ref("");
+const search = ref("");
+
+watch(search, value =>{
+  Inertia.get('/units', {
+    search:value
+  },
+  {
+    preserveState:true,
+    replace:true,
+  })
+})
+
+
 </script>
   
