@@ -205,7 +205,7 @@
                     <td class="px-6 py-4 whitespace-nowrap links">
                       <Link
                         :href="`/readings/${reading.id}`"
-                        class="text-green-600 hover:text-indigo-900"
+                      class="text-green-600 hover:text-indigo-900"
                         >Show</Link
                       >
                       /

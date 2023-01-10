@@ -77,7 +77,8 @@ class ApartmentController extends Controller
         return Inertia::render('Apartments/Show',
         [
             'apartment'=> $apartment,
-            'units'=>$apartment->units()->count()
+            'unitsCount'=>$apartment->units()->count(),
+            'units' => $apartment->units()->get()
         ]);
         
     }

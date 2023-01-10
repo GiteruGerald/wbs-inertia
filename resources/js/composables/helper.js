@@ -10,14 +10,7 @@ export default function useHelper() {
         return (curr-prev)*rate
     }
 
-    const filterByApartment = (apartment)=>{
-        Inertia.get('/apartments',{
-            search:apartment
-        },
-        {
-            preserveState:true
-        })
-    }
+    
     
     const searchApartment = (apartment)=>{
         Inertia.get('/apartments',{
@@ -33,7 +26,6 @@ export default function useHelper() {
     return{
         unitsConsumed,
         chargeAmount,
-        filterByApartment,
         searchApartment
     }
 }
