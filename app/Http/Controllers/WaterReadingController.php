@@ -120,7 +120,7 @@ class WaterReadingController extends Controller
     public function destroy(WaterReading $reading)
     {
         $reading->delete();
-        return Redirect::route('readings.index');
+        return Redirect::back();
         
     }
     

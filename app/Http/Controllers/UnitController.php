@@ -163,6 +163,6 @@ class UnitController extends Controller
     {
         $unit->readings()->delete();
         $unit->delete();
-        return Redirect::route('units.index');
+        return Redirect::back();
     }
 }
