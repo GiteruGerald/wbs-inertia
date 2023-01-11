@@ -66,9 +66,8 @@ class UnitController extends Controller
     {
      
         $units = json_decode($request->getContent() , true);
-        foreach($units as $key =>$unit){
+        foreach($units as $unit){
             foreach($unit as $u){
-                // dd($u['unit_no']);
                 Unit::create([
                     "unit_no"=> $u['unit_no'],
                     "meter_no"=> $u['meter_no'],
