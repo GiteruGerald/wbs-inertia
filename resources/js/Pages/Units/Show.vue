@@ -99,6 +99,8 @@
                       Reading details.
                     </p>
                   </div>
+          <!-- TODO: Add Create Reading Link -->
+
                   <div  v-if="!readings" class="border-t border-gray-200">
                     <dl>
                       <div
