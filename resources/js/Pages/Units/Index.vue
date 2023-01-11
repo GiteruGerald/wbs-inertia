@@ -27,9 +27,7 @@
               placeholder="Search Unit\Apartment Name"
             />
           </div>
-          <div>
-            
-          </div>
+          <div></div>
           <div>
             <Link
               href="/units/create"
@@ -143,6 +141,8 @@
                         >Edit</Link
                       >
                       /
+                      <!-- TODO: Add alert prompt before delete -->
+
                       <Link
                         :href="`/units/${unit.id}`"
                         method="delete"
@@ -177,16 +177,17 @@ const props = defineProps({
 const sort = ref("");
 const search = ref("");
 
-watch(search, value =>{
-  Inertia.get('/units', {
-    search:value
-  },
-  {
-    preserveState:true,
-    replace:true,
-  })
-})
-
-
+watch(search, (value) => {
+  Inertia.get(
+    "/units",
+    {
+      search: value,
+    },
+    {
+      preserveState: true,
+      replace: true,
+    }
+  );
+});
 </script>
   

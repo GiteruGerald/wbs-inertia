@@ -155,6 +155,7 @@
                         >Edit</Link
                       >
                       /
+                      <!-- TODO: Add alert prompt before delete -->
                       <Link
                         :href="`/apartments/${apartment.id}`"
                         method="delete"

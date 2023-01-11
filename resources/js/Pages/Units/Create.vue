@@ -235,8 +235,12 @@ const form = useForm({
 
 const storeUnit = () => {
   // processing.value = true;
-
-  form.post("/units");
+  try {
+    
+    form.post("/units");
+  } catch (error) {
+    
+  }
 };
 </script>
   

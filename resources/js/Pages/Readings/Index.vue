@@ -205,7 +205,7 @@
                     <td class="px-6 py-4 whitespace-nowrap links">
                       <Link
                         :href="`/readings/${reading.id}`"
-                      class="text-green-600 hover:text-indigo-900"
+                        class="text-green-600 hover:text-indigo-900"
                         >Show</Link
                       >
                       /
@@ -215,6 +215,8 @@
                         >Edit</Link
                       >
                       /
+                      <!-- TODO: Add alert prompt before delet -->
+
                       <Link
                         :href="`/readings/${reading.id}`"
                         method="delete"
@@ -255,9 +257,8 @@ const printComponent = () => {
 };
 
 const sortValue = async () => {
-  await filterByApartment(sort.value)
-}
-
+  await filterByApartment(sort.value);
+};
 </script>
     
 <style scoped>

@@ -62,12 +62,45 @@ class UnitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UnitRequest $request)
+    public function store(Request $request)
     {
-        $unit = Unit::create($request->validated());
+        $request->validate([
+            'units.*.unit_no' => ['required','string'],
+            'units.*.meter_no' => ['required','numeric', 'digits:3'],
+        ],[
+            'units.*.unit_no.required' => 'Unit No is required.',
+            'units.*.unit_no.string' => 'Unit No must be a valid string.',
+            'units.*.meter_no.required' => 'Meter No is required.',
+            'units.*.meter_no.numeric' => 'Meter No must be a valid number.',
+            'units.*.meter_no.digits' => 'Meter No must be :digits digits.',
+        ]);
 
-        return Redirect::route('units.index');
+        $units = json_decode($request->getContent() , true);
+
+
+        foreach($units as $key =>$unit){
+            foreach($unit as $u){
+                // dd($u['unit_no']);
+                Unit::create([
+                    "unit_no"=> $u['unit_no'],
+                    "meter_no"=> $u['meter_no'],
+                    "type"=>'1 bedroom',
+                    'apartment_id'=> $u['apartment_id']
+                ]);
+            }
+        }
+        // dd($units);
+        // $unit = Unit::create($request->all);
+
+        return Redirect::back();
+        // return Redirect::route('units.index');
     }
+    // public function store(UnitRequest $request)
+    // {
+    //     $unit = Unit::create($request->validated());
+
+    //     return Redirect::route('units.index');
+    // }
 
     /**
      * Display the specified resource.
