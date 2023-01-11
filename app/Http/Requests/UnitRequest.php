@@ -24,11 +24,19 @@ class UnitRequest extends FormRequest
     public function rules()
     {
         return [
-            'unit_no'=> 'required|string',
-            'meter_no'=> 'required|numeric',
-            'type'=> 'required|string',
-            'apartment_id'=> 'required|integer|exists:apartments,id',
+            'units.*.unit_no' => 'required|string',
+            'units.*.meter_no' => 'required|numeric|digits:3',
 
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'units.*.unit_no.required' => 'Unit No is required.',
+            'units.*.unit_no.string' => 'Unit No must be a valid string.',
+            'units.*.meter_no.required' => 'Meter No is required.',
+            'units.*.meter_no.numeric' => 'Meter No must be a valid number.',
+            'units.*.meter_no.digits' => 'Meter No must be :digits digits.',
         ];
     }
 }
