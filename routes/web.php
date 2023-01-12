@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\BillsController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\WaterReadingController;
 use Illuminate\Foundation\Application;
@@ -31,7 +32,8 @@ Route::get('/admin-dash', function () {
 Route::resource('apartments', ApartmentController::class);
 Route::resource('units', UnitController::class);
 Route::resource('readings', WaterReadingController::class);
-Route::get('readings/{reading}/print', [WaterReadingController::class,'print']);
+Route::resource('bills', BillsController::class);
+Route::get('apartments/{apartment}/units', [ApartmentController::class,'getUnitsByApartment'])->name('apartment.units');
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

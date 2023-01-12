@@ -26,7 +26,7 @@ class UnitRequest extends FormRequest
         return [
             'units.*.unit_no' => 'required|string',
             'units.*.meter_no' => 'required|numeric|digits:3',
-
+            'units.*.apartment_id' => 'required'
         ];
     }
     public function messages()
@@ -37,6 +37,7 @@ class UnitRequest extends FormRequest
             'units.*.meter_no.required' => 'Meter No is required.',
             'units.*.meter_no.numeric' => 'Meter No must be a valid number.',
             'units.*.meter_no.digits' => 'Meter No must be :digits digits.',
+            'units.*.apartment_id' => 'Select Apartment'
         ];
     }
 }

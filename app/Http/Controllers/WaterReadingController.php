@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WaterReadingRequest;
+use App\Http\Resources\ApartmentResource;
 use App\Http\Resources\UnitResource;
 use App\Http\Resources\WaterReadingResource;
+use App\Models\Apartment;
 use App\Models\Unit;
 use App\Models\WaterReading;
 use Illuminate\Http\Request;
@@ -39,12 +41,22 @@ class WaterReadingController extends Controller
     public function create()
     {
         return Inertia::render(
-            'Readings/Create',
+            'Readings/Create copy',
             [
+                'apartments' => ApartmentResource::collection(Apartment::all()),
                 'units' => UnitResource::collection(Unit::all()),
             ]
         );
     }
+    // public function create()
+    // {
+    //     return Inertia::render(
+    //         'Readings/Create',
+    //         [
+    //             'units' => UnitResource::collection(Unit::all()),
+    //         ]
+    //     );
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -54,6 +66,7 @@ class WaterReadingController extends Controller
      */
     public function store(WaterReadingRequest $request)
     {
+        // TODO: Check Readings Create form
         $waterReading= WaterReading::create($request->validated());
 
         return Redirect::route('readings.index');
@@ -124,8 +137,5 @@ class WaterReadingController extends Controller
         
     }
     
-    public function print(WaterReading $reading)
-    {
-        
-    }
+   
 }

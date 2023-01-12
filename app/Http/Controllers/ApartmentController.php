@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ApartmentRequest;
 use App\Http\Resources\ApartmentResource;
 use App\Models\Apartment;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -18,7 +19,6 @@ class ApartmentController extends Controller
      */
     public function index(Request $request)
     {
-
         $apartments = Apartment::query()
             ->when($request->input('search'), function($query, $search){
                 $query->where('name','like', "%{$search}%");
@@ -60,7 +60,7 @@ class ApartmentController extends Controller
      */
     public function store(ApartmentRequest $request)
     {
-        $apartment = Apartment::create($request->validated());
+        Apartment::create($request->validated());
 
         return Redirect::route('apartments.index');
         
@@ -125,5 +125,12 @@ class ApartmentController extends Controller
         $apartment->delete();
         return Redirect::route('apartments.index'); 
 
+    }
+
+    public function getUnitsByApartment(Apartment $apartment)
+    {
+         $units = Unit::where('apartment_id',$apartment->id)->with('readings')->latest()->get();
+
+         return response()->json($units);
     }
 }

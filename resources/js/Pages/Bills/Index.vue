@@ -1,10 +1,10 @@
 <template>
-  <Head title="Units" />
+  <Head title="Bill Details" />
 
   <BreezeAuthenticatedLayout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Units Index
+        Bill Details Index
       </h2>
     </template>
 
@@ -24,13 +24,13 @@
                 focus:border-indigo-500 focus:ring-indigo-500
                 sm:text-sm
               "
-              placeholder="Search Unit\Apartment Name"
+              placeholder="Search Month"
             />
           </div>
           <div></div>
           <div>
             <Link
-              href="/units/create"
+              href="/bills/create"
               class="
                 px-4
                 py-2
@@ -39,7 +39,7 @@
                 text-white
                 rounded
               "
-              >Create Unit</Link
+              >Create Bill</Link
             >
           </div>
         </div>
@@ -69,8 +69,20 @@
                         uppercase
                         tracking-wider
                       "
+                    ></th>
+                    <th
+                      scope="col"
+                      class="
+                        px-6
+                        py-3
+                        text-left text-xs
+                        font-medium
+                        text-gray-500
+                        uppercase
+                        tracking-wider
+                      "
                     >
-                      Unit NO
+                      Month
                     </th>
                     <th
                       scope="col"
@@ -84,28 +96,11 @@
                         tracking-wider
                       "
                     >
-                      Apartment
+                      Rate
                     </th>
                     <th
                       scope="col"
                       class="
-                        px-6
-                        py-3
-                        text-left text-xs
-                        font-medium
-                        text-gray-500
-                        uppercase
-                        tracking-wider
-                      "
-                    >
-                      Type
-                    </th>
-
-                    <th
-                      scope="col"
-                      class="
-                        flex
-                        space-x-4
                         px-6
                         py-3
                         text-left text-xs
@@ -118,22 +113,22 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="unit in units.data" :key="unit.id">
+                  <tr v-for="(bill, index) in bills.data" :key="bill.id">
                     <td class="px-6 py-4 whitespace-nowrap">
-                      {{ unit.unit_no }}
+                      {{ index++ }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      {{ unit.apartment.name }}
+                      {{ bill.month }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      {{ unit.type }}
+                      {{ bill.rate }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="flex">
                         <Link
-                          :href="route('units.show', unit.id)"
+                          :href="route('bills.show', bill.id)"
                           class="text-yellow-600 hover:text-indigo-900"
-                        ><svg
+                          ><svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -150,7 +145,7 @@
                         </Link>
 
                         <Link
-                          :href="route('units.edit', unit.id)"
+                          :href="route('bills.edit', bill.id)"
                           class="text-green-600 hover:text-indigo-900 ml-5"
                           ><svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -167,12 +162,10 @@
                             />
                           </svg>
                         </Link>
-
-                        <button
-                          class="text-red-600 ml-5"
-                          @click="destroyUnit(unit.id)"
-                        >
-                          <svg
+                        <Link
+                          :href="route('bills.edit', bill.id)"
+                          class="text-indigo-600 hover:text-indigo-900 ml-5"
+                          ><svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -183,10 +176,10 @@
                             <path
                               stroke-linecap="round"
                               stroke-linejoin="round"
-                              d="M6 18L18 6M6 6l12 12"
+                              d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
                             />
                           </svg>
-                        </button>
+                        </Link>
                       </div>
                     </td>
                   </tr>
@@ -208,13 +201,13 @@ import { ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
-  units: Object,
+  bills: Object,
 });
 const search = ref("");
 
 watch(search, (value) => {
   Inertia.get(
-    "/units",
+    "/bills",
     {
       search: value,
     },
@@ -224,11 +217,5 @@ watch(search, (value) => {
     }
   );
 });
-
-const destroyUnit = (id) => {
-  if (confirm("Are you sure you want to delete this unit?")) {
-    Inertia.delete(route("units.destroy", id));
-  }
-};
 </script>
   

@@ -15,4 +15,14 @@ class Apartment extends Model
     {
         return $this->hasMany(Unit::class);
     }
+
+    public function bills()
+    {
+        return $this->hasMany(Bill::class);
+    }
+
+    public function readings()
+    {
+        return $this->hasManyThrough(WaterReading::class, Unit::class);
+    }
 }

@@ -25,7 +25,7 @@
           >
           <!-- TODO: Add Go to Edit Link -->
 
-          <!-- TODO: Addd Delete Button -->
+          <!-- TODO: Add Delete Button -->
         </div>
         <div class="flex">
           <div class="container px-5 mx-auto flex">

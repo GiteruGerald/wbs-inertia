@@ -36,6 +36,9 @@ const showingNavigationDropdown = ref(false);
                                 <BreezeNavLink :href="route('units.index')" :active="route().current('units.index')">
                                     Units
                                 </BreezeNavLink>
+                                <BreezeNavLink :href="route('bills.index')" :active="route().current('bills.index')">
+                                    Bills
+                                </BreezeNavLink>
                                 <BreezeNavLink :href="route('readings.index')" :active="route().current('readings.index')">
                                     Water Readings
                                 </BreezeNavLink>
