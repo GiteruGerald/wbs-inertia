@@ -117,152 +117,158 @@
                     <p class="mt-1 max-w-2xl text-sm text-gray-500">
                       Add Reading details for {{ bill.month }}
                     </p>
-                    <div class="mt-1 mr-3">
-                        <div class="flex space-x-2 items-center mt-3">
-                          <div class="flex-auto">
-                            <label
-                              for="unit"
-                              class="block text-sm font-medium text-gray-700"
-                              >Unit No</label
-                            >
-                          </div>
-                          <div class="flex-auto">
-                            <label
-                              for="unit"
-                              class="block text-sm font-medium text-gray-700"
-                              >Meter No</label
-                            >
-                          </div>
-                          <div class="flex-auto">
-                            <label
-                              for="unit"
-                              class="block text-sm font-medium text-gray-700"
-                              >Previous</label
-                            >
-                          </div>
-                          <div class="flex-auto">
-                            <label
-                              for="unit"
-                              class="block text-sm font-medium text-gray-700"
-                              >Current</label
-                            >
-                          </div>
-                        </div>
-                        <div
-                          class="mb-2"
-                          v-for="(unit, index) in units"
-                          :key="index"
-                        >
+                    <form @submit.prevent="saveReadings()">
+                      <div>
+                        <div class="mt-1 mr-3">
                           <div class="flex space-x-2 items-center mt-3">
                             <div class="flex-auto">
-                              <input
-                                v-model="unit.unit_no"
-                                type="text"
-                                class="
-                                  w-full
-                                  focus:ring-yellow-500 focus:border-yellow-500
-                                  block
-                                  w-full
-                                  sm:text-sm
-                                  border-gray-300
-                                "
-                                :aria-label="`Unit {index+1}`"
-                                placeholder="Unit No"
-                                disabled
-                              />
+                              <label
+                                for="unit"
+                                class="block text-sm font-medium text-gray-700"
+                                >Unit No</label
+                              >
                             </div>
                             <div class="flex-auto">
-                              <input
-                                v-model="unit.meter_no"
-                                type="number"
-                                class="
-                                  w-full
-                                  focus:ring-yellow-500 focus:border-yellow-500
-                                  block
-                                  w-full
-                                  sm:text-sm
-                                  border-gray-300
-                                "
-                                :aria-label="`Meter {index+1} No`"
-                                placeholder="Meter No"
-                                
-                              />
-                            </div>
-
-                            <!-- FIXME: Pick up from here -->
-                            <div class="flex-auto">
-                              <input
-                                v-model="unit.readings"
-                                type="text"
-                                class="
-                                  w-full
-                                  focus:ring-yellow-500 focus:border-yellow-500
-                                  block
-                                  w-full
-                                  sm:text-sm
-                                  border-gray-300
-                                "
-                                :aria-label="`Meter {index+1} No`"
-                                placeholder="Previous"
-                                disabled
-                              />
+                              <label
+                                for="unit"
+                                class="block text-sm font-medium text-gray-700"
+                                >Meter No</label
+                              >
                             </div>
                             <div class="flex-auto">
-                              <input
-                                type="text"
-                                class="
-                                  w-full
-                                  focus:ring-yellow-500 focus:border-yellow-500
-                                  block
-                                  w-full
-                                  sm:text-sm
-                                  border-gray-300
-                                "
-                                :aria-label="`Meter {index+1} No`"
-                                placeholder="Current"
-                              />
+                              <label
+                                for="unit"
+                                class="block text-sm font-medium text-gray-700"
+                                >Previous</label
+                              >
+                            </div>
+                            <div class="flex-auto">
+                              <label
+                                for="unit"
+                                class="block text-sm font-medium text-gray-700"
+                                >Current</label
+                              >
                             </div>
                           </div>
-                          <p
-                            class="ml-8 text-xs mt-2 text-red-600"
-                            v-if="form.errors[`units.${index}.unit_no`]"
+                          <div
+                            class="mb-2"
+                            v-for="(unit, index) in form.units"
+                            :key="index"
                           >
-                            {{ form.errors[`units.${index}.unit_no`] }}
-                          </p>
-                          <p
-                            class="ml-8 text-xs mt-2 text-red-600"
-                            v-if="form.errors[`units.${index}.meter_no`]"
+                            <div class="flex space-x-2 items-center mt-3">
+                              <div class="flex-auto">
+                                <input
+                                  v-model="unit.unit_no"
+                                  type="text"
+                                  class="
+                                    w-full
+                                    focus:ring-yellow-500
+                                    focus:border-yellow-500
+                                    block
+                                    w-full
+                                    sm:text-sm
+                                    border-gray-300
+                                  "
+                                  :aria-label="`Unit {index+1}`"
+                                  placeholder="Unit No"
+                                  disabled
+                                />
+                              </div>
+                              <div class="flex-auto">
+                                <input
+                                  v-model="unit.meter_no"
+                                  type="number"
+                                  class="
+                                    w-full
+                                    focus:ring-yellow-500
+                                    focus:border-yellow-500
+                                    block
+                                    w-full
+                                    sm:text-sm
+                                    border-gray-300
+                                  "
+                                  :aria-label="`Meter {index+1} No`"
+                                  placeholder="Meter No"
+                                  disabled
+                                />
+                              </div>
+
+                              <div class="flex-auto">
+                                <input
+                                  v-model="unit.previous"
+                                  type="number"
+                                  class="
+                                    w-full
+                                    focus:ring-yellow-500
+                                    focus:border-yellow-500
+                                    block
+                                    w-full
+                                    sm:text-sm
+                                    border-gray-300
+                                  "
+                                  :aria-label="`Meter {index+1} No`"
+                                  placeholder="Previous"
+                                />
+                              </div>
+                              <div class="flex-auto">
+                                <input
+                                v-model="unit.current"
+                                  type="number"
+                                  class="
+                                    w-full
+                                    focus:ring-yellow-500
+                                    focus:border-yellow-500
+                                    block
+                                    w-full
+                                    sm:text-sm
+                                    border-gray-300
+                                  "
+                                  :aria-label="`Meter {index+1} No`"
+                                  placeholder="Current"
+                                />
+                              </div>
+                            </div>
+                            <p
+                              class="ml-8 text-xs mt-2 text-red-600"
+                              v-if="form.errors[`units.${index}.unit_no`]"
+                            >
+                              {{ form.errors[`units.${index}.unit_no`] }}
+                            </p>
+                            <p
+                              class="ml-8 text-xs mt-2 text-red-600"
+                              v-if="form.errors[`units.${index}.meter_no`]"
+                            >
+                              {{ form.errors[`units.${index}.meter_no`] }}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                          <button
+                            type="submit"
+                            class="
+                              inline-flex
+                              justify-center
+                              rounded-md
+                              border border-transparent
+                              bg-indigo-600
+                              py-2
+                              px-4
+                              text-sm
+                              font-medium
+                              text-white
+                              shadow-sm
+                              hover:bg-indigo-700
+                              focus:outline-none
+                              focus:ring-2
+                              focus:ring-indigo-500
+                              focus:ring-offset-2
+                            "
                           >
-                            {{ form.errors[`units.${index}.meter_no`] }}
-                          </p>
+                            Save Month Readings
+                          </button>
                         </div>
                       </div>
-                      <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                        <button
-                          type="submit"
-                          class="
-                            inline-flex
-                            justify-center
-                            rounded-md
-                            border border-transparent
-                            bg-indigo-600
-                            py-2
-                            px-4
-                            text-sm
-                            font-medium
-                            text-white
-                            shadow-sm
-                            hover:bg-indigo-700
-                            focus:outline-none
-                            focus:ring-2
-                            focus:ring-indigo-500
-                            focus:ring-offset-2
-                          "
-                          :disabled="processing"
-                        >
-                          Save Month Readings
-                        </button>
-                      </div>
+                    </form>
                   </div>
                   <!-- TODO: Add Create Reading Link -->
                 </div>
@@ -289,25 +295,27 @@ const props = defineProps({
   apartment: Object,
 });
 
+
+// FIXME: Pick up from here
+
 const form = useForm({
-  units:[]
-})
+  units: [],
+});
 
-const units = ref([]);
+// const units = ref([]);
 
-const storeReadings = () => {
-  processing.value = true;
+const saveReadings = () => {
   form.post("/readings");
 };
 
 const getUnits = async () => {
   await axios.get(`/apartments/${props.apartment.id}/units`).then((res) => {
-    units.value = res.data;
+    form.units = res.data;
   });
 };
 
-onMounted(()=>{
+onMounted(() => {
   getUnits();
-})
+});
 </script>
   
