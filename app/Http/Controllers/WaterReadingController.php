@@ -68,10 +68,24 @@ class WaterReadingController extends Controller
     {
         // $readings = json_decode($request->getContent() , true);
 dd($request->all());
-        // TODO: Check Readings Create form
-        $waterReading= WaterReading::create($request->validated());
 
-        return Redirect::route('readings.index');
+        // FIXME: Check Readings Create form
+        // TODO: Pick up form here form
+
+        foreach($request as $reading){
+            foreach($reading as $r){
+                WaterReading::create([
+                    'unit_id'=> $r['unit_id'],
+                    'bill_id'=> $r['bill_id'],
+                    'previous'=> $r['previous'],
+                    'current'=> $r['current']
+                ]);
+            }
+        }
+        // $waterReading= WaterReading::create($request->validated());
+
+        // return Redirect::route('readings.index');
+        return Redirect::back();
     }
 
     /**

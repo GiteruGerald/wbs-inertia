@@ -209,6 +209,12 @@
                                   :aria-label="`Meter {index+1} No`"
                                   placeholder="Previous"
                                 />
+                                <p
+                                  class="ml-8 text-xs mt-2 text-red-600"
+                                  v-if="form.errors[`units.${index}.previous`]"
+                                >
+                                  {{ form.errors[`units.${index}.previous`] }}
+                                </p>
                               </div>
                               <div class="flex-auto">
                                 <input
@@ -226,20 +232,14 @@
                                   :aria-label="`Meter {index+1} No`"
                                   placeholder="Current"
                                 />
+                                <p
+                                  class="ml-8 text-xs mt-2 text-red-600"
+                                  v-if="form.errors[`units.${index}.current`]"
+                                >
+                                  {{ form.errors[`units.${index}.current`] }}
+                                </p>
                               </div>
                             </div>
-                            <p
-                              class="ml-8 text-xs mt-2 text-red-600"
-                              v-if="form.errors[`units.${index}.unit_no`]"
-                            >
-                              {{ form.errors[`units.${index}.unit_no`] }}
-                            </p>
-                            <p
-                              class="ml-8 text-xs mt-2 text-red-600"
-                              v-if="form.errors[`units.${index}.meter_no`]"
-                            >
-                              {{ form.errors[`units.${index}.meter_no`] }}
-                            </p>
                           </div>
                         </div>
                         <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
@@ -293,6 +293,7 @@ import axios from "axios";
 const props = defineProps({
   bill: Object,
   apartment: Object,
+  errors:Object
 });
 
 

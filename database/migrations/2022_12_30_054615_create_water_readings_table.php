@@ -22,8 +22,8 @@ class CreateWaterReadingsTable extends Migration
             $table->foreign('bill_id')->references('id')->on('bills');
             $table->mediumInteger('previous');
             $table->mediumInteger('current');
-            $table->double('rate');
-            $table->string('month');
+            // $table->double('rate');
+            // $table->string('month');
             // $table->string('year');
             $table->timestamps();
         });
