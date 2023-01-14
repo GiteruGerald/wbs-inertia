@@ -26,8 +26,7 @@ class WaterReadingRequest extends FormRequest
         return [
             'units.*.previous' => 'required|numeric|lte:units.*.current',
             'units.*.current' => 'required|numeric|gte:units.*.previous',
-            'units.*.unit_id' => 'required|integer|exists:units,id',
-            'units.*.bill_id' => 'required|integer|exists:bill_details,id',
+            'bill_id' => 'required|integer|exists:bill_details,id',
         ];
     }
 

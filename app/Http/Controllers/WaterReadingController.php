@@ -67,7 +67,7 @@ class WaterReadingController extends Controller
     public function store(WaterReadingRequest $request)
     {
         // $readings = json_decode($request->getContent() , true);
-dd($request->all());
+dd($request);
 
         // FIXME: Check Readings Create form
         // TODO: Pick up form here form

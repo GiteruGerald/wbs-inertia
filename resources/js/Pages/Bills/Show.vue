@@ -297,10 +297,11 @@ const props = defineProps({
 });
 
 
-// FIXME: Pick up from here
+// FIXME: Pass in Unit and Bill Id  from here
 
 const form = useForm({
   units: [],
+  bill_id:props.bill.id
 });
 
 // const units = ref([]);
