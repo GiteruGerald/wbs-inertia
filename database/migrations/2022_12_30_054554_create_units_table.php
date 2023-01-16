@@ -17,7 +17,7 @@ class CreateUnitsTable extends Migration
             $table->id();
             $table->string('unit_no');
             $table->unsignedBigInteger('apartment_id');
-            $table->foreign('apartment_id')->references('apartments')->on('id')->onDelete('cascade');
+            $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');
 
             $table->string('meter_no');
             $table->string('type');

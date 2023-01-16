@@ -18,8 +18,8 @@ class CreateWaterReadingsTable extends Migration
             $table->unsignedBigInteger('unit_id');
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
 
-            $table->unsignedBigInteger('bill_id');
-            $table->foreign('bill_id')->references('id')->on('bills');
+            // $table->integer('bill_id');
+            // $table->foreign('bill_id')->references('id')->on('bills');
             $table->mediumInteger('previous');
             $table->mediumInteger('current');
             // $table->double('rate');

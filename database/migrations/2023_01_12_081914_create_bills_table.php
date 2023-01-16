@@ -17,7 +17,7 @@ class CreateBillsTable extends Migration
             $table->id();
 
             $table->unsignedBigInteger('apartment_id');
-            $table->foreign('apartment_id')->references('apartments')->on('id');
+            $table->foreign('apartment_id')->references('id')->on('apartments');
 
             $table->string('month');
             $table->date('bill_date');

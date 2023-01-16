@@ -15,4 +15,9 @@ class WaterReading extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    public function bill()
+    {
+        return $this->belongsTo(Bill::class);
+    }
 }
