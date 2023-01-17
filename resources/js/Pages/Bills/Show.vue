@@ -152,7 +152,7 @@
                           </div>
                           <div
                             class="mb-2"
-                            v-for="(unit, index) in form.units"
+                            v-for="(unit, index) in form.readings"
                             :key="index"
                           >
                             <div class="flex space-x-2 items-center mt-3">
@@ -211,9 +211,9 @@
                                 />
                                 <p
                                   class="ml-8 text-xs mt-2 text-red-600"
-                                  v-if="form.errors[`units.${index}.previous`]"
+                                  v-if="form.errors[`readings.${index}.previous`]"
                                 >
-                                  {{ form.errors[`units.${index}.previous`] }}
+                                  {{ form.errors[`readings.${index}.previous`] }}
                                 </p>
                               </div>
                               <div class="flex-auto">
@@ -234,9 +234,9 @@
                                 />
                                 <p
                                   class="ml-8 text-xs mt-2 text-red-600"
-                                  v-if="form.errors[`units.${index}.current`]"
+                                  v-if="form.errors[`readings.${index}.current`]"
                                 >
-                                  {{ form.errors[`units.${index}.current`] }}
+                                  {{ form.errors[`readings.${index}.current`] }}
                                 </p>
                               </div>
                             </div>
@@ -300,11 +300,11 @@ const props = defineProps({
 // FIXME: Pass in Unit and Bill Id  from here
 
 const form = useForm({
-  units: [],
+  readings: [],
   bill_id:props.bill.id
 });
 
-// const units = ref([]);
+// const readings = ref([]);
 
 const saveReadings = () => {
   form.post("/readings");
@@ -312,7 +312,8 @@ const saveReadings = () => {
 
 const getUnits = async () => {
   await axios.get(`/apartments/${props.apartment.id}/units`).then((res) => {
-    form.units = res.data;
+    form.readings = res.data;
+
   });
 };
 

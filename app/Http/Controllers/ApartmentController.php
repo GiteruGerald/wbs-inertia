@@ -129,7 +129,7 @@ class ApartmentController extends Controller
 
     public function getUnitsByApartment(Apartment $apartment)
     {
-         $units = Unit::where('apartment_id',$apartment->id)->with('readings')->latest()->get();
+         $units = Unit::select('id','unit_no','meter_no')->where('apartment_id',$apartment->id)->latest()->get();
 
          return response()->json($units);
     }

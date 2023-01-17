@@ -7,11 +7,12 @@ use App\Http\Resources\ApartmentResource;
 use App\Http\Resources\UnitResource;
 use App\Http\Resources\WaterReadingResource;
 use App\Models\Apartment;
+use App\Models\Bill;
 use App\Models\Unit;
 use App\Models\WaterReading;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Support\Arr;
 
 class WaterReadingController extends Controller
 {
@@ -66,26 +67,29 @@ class WaterReadingController extends Controller
      */
     public function store(WaterReadingRequest $request)
     {
-        // $readings = json_decode($request->getContent() , true);
-dd($request);
+        $readings = json_decode($request->getContent(), true);
 
-        // FIXME: Check Readings Create form
-        // TODO: Pick up form here form
+        $bill = Bill::find($readings['bill_id']);
 
-        foreach($request as $reading){
-            foreach($reading as $r){
-                WaterReading::create([
-                    'unit_id'=> $r['unit_id'],
-                    'bill_id'=> $r['bill_id'],
-                    'previous'=> $r['previous'],
-                    'current'=> $r['current']
+        foreach ((array) $readings as $reading) {
+            foreach ((array) $reading as $key => $r) {
+                // FIXME : STILL getting Error: Trying to access array offset on value of type int
+                $record = WaterReading::create([
+                    'unit_no' => $r['unit_no'],
+                    'previous' =>  $r['previous'],
+                    'current' => $r['current']
                 ]);
+                $s= $bill->readings()->attach($record->id);
             }
         }
         // $waterReading= WaterReading::create($request->validated());
 
-        // return Redirect::route('readings.index');
-        return Redirect::back();
+        if ($s) {
+
+            return Redirect::route("readings.index");
+        } else {
+            return Redirect::back();
+        }
     }
 
     /**
@@ -98,13 +102,13 @@ dd($request);
     {
         $unit = $reading->unit()->first();
         $apartment = $unit->apartment()->first();
-        
+
         return Inertia::render(
             'Readings/Show',
             [
                 'reading' => $reading,
-                'unit'=> $unit,
-                'apartment'=> $apartment,
+                'unit' => $unit,
+                'apartment' => $apartment,
             ]
         );
     }
@@ -150,8 +154,5 @@ dd($request);
     {
         $reading->delete();
         return Redirect::back();
-        
     }
-    
-   
 }
