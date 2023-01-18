@@ -13,7 +13,7 @@ class Unit extends Model
 
     public function apartment()
     {
-        return $this->belongsTo(Apartment::class);
+        return $this->belongsTo(Apartment::class)->select(['id','name']);
     }
 
     public function readings()

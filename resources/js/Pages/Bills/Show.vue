@@ -123,7 +123,7 @@
                           <div class="flex space-x-2 items-center mt-3">
                             <div class="flex-auto">
                               <label
-                                for="unit"
+                                for="reading"
                                 class="block text-sm font-medium text-gray-700"
                                 >Unit No</label
                               >
@@ -152,13 +152,13 @@
                           </div>
                           <div
                             class="mb-2"
-                            v-for="(unit, index) in form.readings"
+                            v-for="(reading, index) in form.units"
                             :key="index"
                           >
                             <div class="flex space-x-2 items-center mt-3">
                               <div class="flex-auto">
                                 <input
-                                  v-model="unit.unit_no"
+                                  v-model="reading.unit_no"
                                   type="text"
                                   class="
                                     w-full
@@ -176,7 +176,7 @@
                               </div>
                               <div class="flex-auto">
                                 <input
-                                  v-model="unit.meter_no"
+                                  v-model="reading.meter_no"
                                   type="number"
                                   class="
                                     w-full
@@ -195,7 +195,7 @@
 
                               <div class="flex-auto">
                                 <input
-                                  v-model="unit.previous"
+                                  v-model="reading.previous"
                                   type="number"
                                   class="
                                     w-full
@@ -211,14 +211,18 @@
                                 />
                                 <p
                                   class="ml-8 text-xs mt-2 text-red-600"
-                                  v-if="form.errors[`readings.${index}.previous`]"
+                                  v-if="
+                                    form.errors[`readings.${index}.previous`]
+                                  "
                                 >
-                                  {{ form.errors[`readings.${index}.previous`] }}
+                                  {{
+                                    form.errors[`readings.${index}.previous`]
+                                  }}
                                 </p>
                               </div>
                               <div class="flex-auto">
                                 <input
-                                v-model="unit.current"
+                                  v-model="reading.current"
                                   type="number"
                                   class="
                                     w-full
@@ -234,7 +238,9 @@
                                 />
                                 <p
                                   class="ml-8 text-xs mt-2 text-red-600"
-                                  v-if="form.errors[`readings.${index}.current`]"
+                                  v-if="
+                                    form.errors[`readings.${index}.current`]
+                                  "
                                 >
                                   {{ form.errors[`readings.${index}.current`] }}
                                 </p>
@@ -273,6 +279,143 @@
                   <!-- TODO: Add Create Reading Link -->
                 </div>
               </div>
+
+              <div class="overflow-hidden bg-white mt-5 shadow sm:rounded-lg">
+                <div>
+                  <div class="px-4 py-5 sm:px-6">
+                    <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                      Readings Recorded for
+                      <b>{{ bill.month }}: {{ apartment.name }}</b>
+                    </p>
+                    <p class="mt-1 text-xs text-gray-500">
+                      Rate: <b>{{ bill.rate }}</b>
+                    </p>
+                  </div>
+                </div>
+                <div class="border-t px-5 border-gray-200">
+                  <dl>
+                    <table
+                      class="min-w-full py-3 px-4 divide-y divide-gray-200"
+                    >
+                      <thead class="bg-gray-50">
+                        <tr>
+                          <th
+                            scope="col"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-gray-500
+                              uppercase
+                              tracking-wider
+                            "
+                          >
+                            Unit
+                          </th>
+                          <th
+                            scope="col"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-gray-500
+                              uppercase
+                              tracking-wider
+                            "
+                          >
+                            Previous
+                          </th>
+                          <th
+                            scope="col"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-gray-500
+                              uppercase
+                              tracking-wider
+                            "
+                          >
+                            Current
+                          </th>
+                          <th
+                            scope="col"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-gray-500
+                              uppercase
+                              tracking-wider
+                            "
+                          >
+                            Units Consumed
+                          </th>
+                          <th
+                            scope="col"
+                            class="
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-gray-500
+                              uppercase
+                              tracking-wider
+                            "
+                          >
+                            Amount
+                          </th>
+                          <th
+                            scope="col"
+                            class="
+                              flex
+                              space-x-4
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-gray-500
+                              uppercase
+                              tracking-wider
+                            "
+                          ></th>
+                        </tr>
+                      </thead>
+                      <tbody class="bg-white divide-y divide-gray-200">
+                        <tr v-for="reading in readings" :key="reading.id">
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            {{ reading.unit.unit_no }}
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            {{ reading.previous }}
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            {{ reading.current }}
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            {{
+                              unitsConsumed(reading.previous, reading.current)
+                            }}
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            {{
+                              chargeAmount(
+                                reading.current,
+                                reading.previous,
+                                bill.rate
+                              )
+                            }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </dl>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -286,25 +429,26 @@
   <script setup>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
-import { HomeIcon } from "@heroicons/vue/20/solid";
 import { onMounted, ref } from "vue";
 import axios from "axios";
+import useHelper from "../../composables/helper";
 
 const props = defineProps({
   bill: Object,
   apartment: Object,
-  errors:Object
+  errors: Object,
 });
 
+const { unitsConsumed, chargeAmount } = useHelper();
 
 // FIXME: Pass in Unit and Bill Id  from here
 
 const form = useForm({
-  readings: [],
-  bill_id:props.bill.id
+  units: [],
+  bill_id: props.bill.id,
 });
 
-// const readings = ref([]);
+const readings = ref([]);
 
 const saveReadings = () => {
   form.post("/readings");
@@ -312,13 +456,18 @@ const saveReadings = () => {
 
 const getUnits = async () => {
   await axios.get(`/apartments/${props.apartment.id}/units`).then((res) => {
-    form.readings = res.data;
-
+    form.units = res.data;
   });
 };
 
+const getReadings = async () => {
+  await axios.get(`/bills/${props.bill.id}/readings`).then((res) => {
+    readings.value = res.data;
+  });
+};
 onMounted(() => {
   getUnits();
+  getReadings();
 });
 </script>
   

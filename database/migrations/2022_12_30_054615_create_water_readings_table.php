@@ -15,13 +15,14 @@ class CreateWaterReadingsTable extends Migration
     {
         Schema::create('water_readings', function (Blueprint $table) {
             $table->id();
-            $table->string('unit_no');
+            $table->unsignedBigInteger('unit_id');
+            $table->foreign('unit_id')->references('id')->on('units');
+
+            $table->unsignedBigInteger('bill_id');
+            $table->foreign('bill_id')->references('id')->on('bills');
 
             $table->mediumInteger('previous');
             $table->mediumInteger('current');
-            // $table->double('rate');
-            // $table->string('month');
-            // $table->string('year');
             $table->timestamps();
         });
     }

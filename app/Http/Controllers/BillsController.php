@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BillRequest;
 use App\Http\Resources\ApartmentResource;
+use App\Http\Resources\BillResource;
 use App\Models\Apartment;
 use App\Models\Bill;
+use App\Models\WaterReading;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -14,26 +16,33 @@ use Inertia\Inertia;
 class BillsController extends Controller
 {
     /**
- * Display a listing of the resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
         $bills = Bill::query()
-                    ->when($request->input('search'), function($query, $search){
-                        $query->where('month', 'like', "%{$search}%");  
-                    })
-                    ->paginate(10)
-                    ->through(fn($bill)=>[
-                        'id'=>$bill->id,
-                        'month'=>$bill->month,
-                        'rate'=>$bill->rate,
-                    ]);
-        return Inertia::render('Bills/Index',
-        [
-            'bills' => $bills
-        ]);
+            ->when($request->input('search'), function ($query, $search) {
+                $query
+                    ->join('apartments', 'bills.apartment_id', '=', 'apartments.id')
+                    ->select('bills.*')
+                    ->where('month', 'like', "%{$search}%")
+                    ->orWhere('name', 'like', "%{$search}%");
+            })
+            ->paginate(10)
+            ->through(fn ($bill) => [
+                'id' => $bill->id,
+                'apartment' => $bill->apartment()->get(),
+                'month' => $bill->month,
+                'rate' => $bill->rate,
+            ]);
+        return Inertia::render(
+            'Bills/Index',
+            [
+                'bills' => $bills
+            ]
+        );
     }
 
     /**
@@ -43,11 +52,10 @@ class BillsController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Bills/Create',[
+        return Inertia::render('Bills/Create', [
             'apartments' => ApartmentResource::collection(Apartment::all()),
 
         ]);
-
     }
 
     /**
@@ -58,7 +66,7 @@ class BillsController extends Controller
      */
     public function store(BillRequest $request)
     {
-        
+
         Bill::create($request->validated());
 
         return Redirect::route('bills.index');
@@ -73,12 +81,14 @@ class BillsController extends Controller
     public function show(Bill $bill)
     {
         // return $bill;
-        return Inertia::render('Bills/Show',
-        [
-            'bill'=> $bill,
-            'apartment' => $bill->apartment()->first()
+        return Inertia::render(
+            'Bills/Show',
+            [
+                'bill' => $bill,
+                'apartment' => $bill->apartment()->first()
 
-        ]);
+            ]
+        );
     }
 
     /**
@@ -89,11 +99,13 @@ class BillsController extends Controller
      */
     public function edit(Bill $bill)
     {
-        return Inertia::render('Bills/Edit',
-        [
-            'bill'=> $bill,
-            'apartments' => ApartmentResource::collection(Apartment::all()),
-        ]);
+        return Inertia::render(
+            'Bills/Edit',
+            [
+                'bill' => $bill,
+                'apartments' => ApartmentResource::collection(Apartment::all()),
+            ]
+        );
     }
 
     /**
@@ -107,7 +119,14 @@ class BillsController extends Controller
     {
         $bill->update($request->validated());
 
-        return Redirect::route('bills.index'); 
+        return Redirect::route('bills.index');
+    }
+
+    public function getReadingsByBill(Bill $bill)
+    {
+        $readings = WaterReading::query()->where('bill_id',$bill->id)->with('unit')->get();
+
+        return response()->json($readings);
     }
 
 

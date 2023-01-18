@@ -23,16 +23,17 @@ class UnitController extends Controller
 
         $units = UnitResource::collection(
             Unit::query()
-            ->when($request->input('search'), function($query, $search){
-                $query
-                    ->join('apartments', 'units.apartment_id','=','apartments.id')
-                    ->select('units.*')
-                            ->where('unit_no','like',"%{$search}%")
-                            ->orWhere('name','like',"%{$search}%")
-                        ;
-                    })
-            ->with('apartment')->get());
-            
+                ->when($request->input('search'), function ($query, $search) {
+                    $query
+                        ->join('apartments', 'units.apartment_id', '=', 'apartments.id')
+                        ->select('units.*')
+                        ->where('unit_no', 'like', "%{$search}%")
+                        ->orWhere('name', 'like', "%{$search}%");
+                })
+                ->with('apartment')
+                ->get()
+        );
+
         return Inertia::render(
             'Units/Index',
             [
@@ -64,21 +65,21 @@ class UnitController extends Controller
      */
     public function store(UnitRequest $request)
     {
-     
-        $units = json_decode($request->getContent() , true);
-        foreach($units as $unit){
-            foreach($unit as $u){
+
+        $units = json_decode($request->getContent(), true);
+        foreach ($units as $unit) {
+            foreach ($unit as $u) {
                 Unit::create([
-                    "unit_no"=> $u['unit_no'],
-                    "meter_no"=> $u['meter_no'],
-                    "type"=>'1 bedroom',
-                    'apartment_id'=> $u['apartment_id']
+                    "unit_no" => $u['unit_no'],
+                    "meter_no" => $u['meter_no'],
+                    "type" => '1 bedroom',
+                    'apartment_id' => $u['apartment_id']
                 ]);
             }
         }
         return Redirect::back();
     }
-   
+
     /**
      * Display the specified resource.
      *
@@ -93,7 +94,7 @@ class UnitController extends Controller
             'Units/Show',
             [
                 'unit' => $unit,
-                'readings' => $unit->readings()->get() ,
+                'readings' => $unit->readings()->get(),
                 'apartment' => $unit->apartment()->first()
             ]
         );
@@ -111,7 +112,7 @@ class UnitController extends Controller
             'Units/Edit',
             [
                 'unit' => $unit,
-                'apartments'=> ApartmentResource::collection(Apartment::all())
+                'apartments' => ApartmentResource::collection(Apartment::all())
             ]
         );
     }
@@ -130,7 +131,7 @@ class UnitController extends Controller
         return Redirect::route('units.index');
     }
 
-/**
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Unit  $unit

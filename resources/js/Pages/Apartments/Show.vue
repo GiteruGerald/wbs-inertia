@@ -381,7 +381,7 @@ import { Inertia } from "@inertiajs/inertia";
 const props = defineProps({
   apartment: Object,
   units: Object,
-  unitsCount: Object,
+  unitsCount: Number,
   errors: Object,
 });
 

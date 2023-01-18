@@ -69,26 +69,22 @@ class WaterReadingController extends Controller
     {
         $readings = json_decode($request->getContent(), true);
 
-        $bill = Bill::find($readings['bill_id']);
-
-        foreach ((array) $readings as $reading) {
-            foreach ((array) $reading as $key => $r) {
-                // FIXME : STILL getting Error: Trying to access array offset on value of type int
-                $record = WaterReading::create([
-                    'unit_no' => $r['unit_no'],
+        $new_insert_array = array();
+        foreach ($readings as $reading) {
+            foreach ($reading as $key => $r) {
+                $new_insert_array[] = array(
+                    'unit_id' => $r['id'],
+                    'bill_id' => $readings['bill_id'],
                     'previous' =>  $r['previous'],
                     'current' => $r['current']
-                ]);
-                $s= $bill->readings()->attach($record->id);
+                );
             }
-        }
-        // $waterReading= WaterReading::create($request->validated());
-
-        if ($s) {
-
-            return Redirect::route("readings.index");
-        } else {
-            return Redirect::back();
+            $record = WaterReading::insert($new_insert_array);
+            if ($record) {
+                return Redirect::route("readings.index");
+            } else {
+                return Redirect::back();
+            }
         }
     }
 

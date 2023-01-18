@@ -81,6 +81,18 @@
                         uppercase
                         tracking-wider
                       "
+                    >Apartment</th>
+                    <th
+                      scope="col"
+                      class="
+                        px-6
+                        py-3
+                        text-left text-xs
+                        font-medium
+                        text-gray-500
+                        uppercase
+                        tracking-wider
+                      "
                     >
                       Month
                     </th>
@@ -116,6 +128,9 @@
                   <tr v-for="(bill, index) in bills.data" :key="bill.id">
                     <td class="px-6 py-4 whitespace-nowrap">
                       {{ index++ }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      {{ bill.apartment[0].name }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       {{ bill.month }}
