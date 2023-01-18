@@ -93,7 +93,7 @@
                 <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt class="text-sm font-medium text-gray-500">Month</dt>
                   <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                    {{ reading.month }}
+                    {{ bill.month }}
                   </dd>
                 </div>
 
@@ -140,7 +140,7 @@
                     Rate Per Unit
                   </dt>
                   <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                    {{ reading.rate }}
+                    {{ bill.rate }}
                   </dd>
                 </div>
                 <hr />
@@ -153,7 +153,7 @@
                       chargeAmount(
                         reading.current,
                         reading.previous,
-                        reading.rate
+                        bill.rate
                       )
                     }}
                   </dd>
@@ -173,7 +173,6 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
-import { HomeIcon } from "@heroicons/vue/20/solid";
 import { onMounted, ref } from "vue";
 import useHelper from "../../composables/helper";
 
@@ -188,6 +187,7 @@ onMounted(()=>{
 const props = defineProps({
   reading: Object,
   unit: Object,
+  bill: Object,
   apartment: Object,
 });
 
@@ -197,11 +197,7 @@ const storeAgreement = () => {
 };
 
 const printComponent = ()=>{
-  
   window.print(receipt.value)
-  // Inertia.post("https://invoice-generator.com",{
-  //   date:new Date
-  // }) 
 }
 </script>
   

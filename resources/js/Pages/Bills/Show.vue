@@ -86,7 +86,7 @@
                 </div>
                 <hr />
                 <!-- Reading Details -->
-                <div>
+                <div v-if="!processed">
                   <div class="px-4 py-5 sm:px-6">
                     <p class="mt-1 max-w-2xl text-sm text-gray-500">
                       Add Reading details for {{ bill.month }}
@@ -267,7 +267,7 @@
   <script setup>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import axios from "axios";
 import useHelper from "../../composables/helper";
 
@@ -279,8 +279,10 @@ const props = defineProps({
 
 const { unitsConsumed, chargeAmount } = useHelper();
 
-// FIXME: Pass in Unit and Bill Id  from here
-
+let processed = ref();
+computed(()=>{
+ 
+})
 const form = useForm({
   units: [],
   bill_id: props.bill.id,
@@ -301,6 +303,10 @@ const getUnits = async () => {
 
 onMounted(() => {
   getUnits();
+  if(props.bill.status === 1) {
+     processed.value= true
+  }
+  // console.log(props.bill.status);
 });
 </script>
   

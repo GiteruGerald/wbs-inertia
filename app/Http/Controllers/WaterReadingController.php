@@ -23,12 +23,13 @@ class WaterReadingController extends Controller
      */
     public function index()
     {
+        // return WaterReadingResource::collection(WaterReading::with(['unit','bill'])->latest()->get());
         // return WaterReading::with('unit')->latest()->get();
         // return WaterReadingResource::collection(WaterReading::with('unit')->latest()->get());
         return Inertia::render(
             'Readings/Index',
             [
-                'readings' => WaterReadingResource::collection(WaterReading::with('unit')->latest()->get())
+                'readings' => WaterReadingResource::collection(WaterReading::with(['unit','bill'])->latest()->get())
                 // 'readings' => WaterReading::with('unit')->latest()->get()
             ]
         );
@@ -68,24 +69,32 @@ class WaterReadingController extends Controller
     public function store(WaterReadingRequest $request)
     {
         $readings = json_decode($request->getContent(), true);
-        $bill = $readings['bill_id'];
+        $billId = $readings['bill_id'];
+
         $new_insert_array = array();
         foreach ($readings as $reading) {
             foreach ($reading as $key => $r) {
                 $new_insert_array[] = array(
                     'unit_id' => $r['id'],
-                    'bill_id' => $bill,
+                    'bill_id' => $billId,
                     'previous' =>  $r['previous'],
                     'current' => $r['current']
                 );
             }
             $record = WaterReading::insert($new_insert_array);
             if ($record) {
-                return Redirect::route("bills.readings", $bill);
+                $bill = Bill::find($billId);
+                $bill->update([
+                    "status"=>1
+                ]);
+                return Redirect::route("bills.readings", $billId);
             } else {
                 return Redirect::back();
             }
         }
+
+
+
     }
 
     /**
@@ -98,12 +107,14 @@ class WaterReadingController extends Controller
     {
         $unit = $reading->unit()->first();
         $apartment = $unit->apartment()->first();
+        $bill = $reading->bill()->first();
 
         return Inertia::render(
             'Readings/Show',
             [
                 'reading' => $reading,
                 'unit' => $unit,
+                'bill' => $bill,
                 'apartment' => $apartment,
             ]
         );

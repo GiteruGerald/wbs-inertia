@@ -21,4 +21,5 @@ class Unit extends Model
         return $this->hasMany(WaterReading::class);
     }
 
+
 }

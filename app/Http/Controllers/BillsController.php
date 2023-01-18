@@ -36,6 +36,7 @@ class BillsController extends Controller
                 'apartment' => $bill->apartment()->get(),
                 'month' => $bill->month,
                 'rate' => $bill->rate,
+                'status' => $bill->status,
             ]);
         return Inertia::render(
             'Bills/Index',

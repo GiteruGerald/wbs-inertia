@@ -121,6 +121,20 @@
                         uppercase
                         tracking-wider
                       "
+                    >
+                      Status
+                    </th>
+                    <th
+                      scope="col"
+                      class="
+                        px-6
+                        py-3
+                        text-left text-xs
+                        font-medium
+                        text-gray-500
+                        uppercase
+                        tracking-wider
+                      "
                     ></th>
                   </tr>
                 </thead>
@@ -138,6 +152,13 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                       {{ bill.rate }}
                     </td>
+                    <td class="px-6 py-4 whitespace-nowrap" v-if="bill.status === 0">
+                      <span class="bg-pink-100 text-pink-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">Not Recorded</span>
+                      </td>
+                    <td class="px-6 py-4 whitespace-nowrap" v-else>
+                      <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Recorded</span>
+                      </td>
+                      <!-- TODO: Implement Recorded flag -->
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="flex">
                         <Link
@@ -177,6 +198,7 @@
                             />
                           </svg>
                         </Link>
+                        
                         <Link
                           :href="route('bills.readings', bill.id)"
                           class="text-indigo-600 hover:text-indigo-900 ml-5"
@@ -212,13 +234,14 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import useHelper from "../../composables/helper";
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
   bills: Object,
 });
 const search = ref("");
+
 
 watch(search, (value) => {
   Inertia.get(
@@ -232,5 +255,7 @@ watch(search, (value) => {
     }
   );
 });
+
+
 </script>
   

@@ -17,13 +17,15 @@ class CreateBillsTable extends Migration
             $table->id();
 
             $table->unsignedBigInteger('apartment_id');
-            $table->foreign('apartment_id')->references('id')->on('apartments');
+            $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');
 
             $table->string('month');
             $table->date('bill_date');
             $table->date('issue_date');
             $table->date('due_date');
             $table->double('rate');
+            $table->boolean('status')->default(false);
+
             $table->timestamps();
         });
     }

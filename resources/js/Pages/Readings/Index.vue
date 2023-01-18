@@ -12,52 +12,14 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="flex justify-between m-2 p-2">
           <div>
-            <button
-              class="
-                px-4
-                py-2
-                bg-green-500
-                hover:bg-green-600
-                text-white
-                rounded
-              "
-              @click="printComponent()"
-            >
-              Print
-            </button>
+            <p>All Water reading details</p>
           </div>
-          <div>
-            <select
-              class="form-control"
-              id=""
-              v-model="sort"
-              @change="sortValue"
-            >
-              <option value="">--Filter By Type--</option>
-              <option value="Residential">Residential</option>
-              <option value="Commercial">Commercial</option>
-              <option value="Industrial">Industrial</option>
-            </select>
-          </div>
-          <div>
-            <Link
-              href="/readings/create"
-              class="
-                px-4
-                py-2
-                bg-indigo-500
-                hover:bg-indigo-600
-                text-white
-                rounded
-              "
-              >Add Reading</Link
-            >
-          </div>
+
         </div>
         <div class="flex flex-col" v-if="!readings.data">
           <p>No reading details added</p>
         </div>
-        <div class="flex flex-col print-container" ref="printable" v-else>
+        <div class="flex flex-col" v-else>
           <div
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
@@ -185,20 +147,20 @@
                       {{ reading.unit.meter_no }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      {{ reading.month }}
+                      {{ reading.bill.month }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       {{ unitsConsumed(reading.previous, reading.current) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      {{ reading.rate }}
+                      {{ reading.bill.rate }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       {{
                         chargeAmount(
                           reading.current,
                           reading.previous,
-                          reading.rate
+                          reading.bill.rate
                         )
                       }}
                     </td>
@@ -285,42 +247,14 @@ const props = defineProps({
   readings: Object,
 });
 
-const printable = ref(null);
-const sort = ref("");
 
-const { unitsConsumed, chargeAmount, filterByApartment } = useHelper();
+const { unitsConsumed, chargeAmount } = useHelper();
 
-const printComponent = () => {
-  window.print(printable.value);
-};
 
 const destroyReading = (id) => {
   if (confirm("Are you sure you want to delete this reading?")) {
     Inertia.delete(route("readings.destroy", id));
   }
 };
-const sortValue = async () => {
-  await filterByApartment(sort.value);
-};
 </script>
     
-<style scoped>
-@media print {
-  body * {
-    visibility: hidden;
-  }
-
-  .links {
-    visibility: hidden;
-  }
-  .print-container,
-  .print-container * {
-    visibility: visible;
-  }
-  .print-container {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-  }
-}
-</style>
