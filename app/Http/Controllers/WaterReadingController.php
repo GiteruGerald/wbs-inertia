@@ -68,20 +68,20 @@ class WaterReadingController extends Controller
     public function store(WaterReadingRequest $request)
     {
         $readings = json_decode($request->getContent(), true);
-
+        $bill = $readings['bill_id'];
         $new_insert_array = array();
         foreach ($readings as $reading) {
             foreach ($reading as $key => $r) {
                 $new_insert_array[] = array(
                     'unit_id' => $r['id'],
-                    'bill_id' => $readings['bill_id'],
+                    'bill_id' => $bill,
                     'previous' =>  $r['previous'],
                     'current' => $r['current']
                 );
             }
             $record = WaterReading::insert($new_insert_array);
             if ($record) {
-                return Redirect::route("readings.index");
+                return Redirect::route("bills.readings", $bill);
             } else {
                 return Redirect::back();
             }

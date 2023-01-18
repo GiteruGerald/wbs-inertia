@@ -178,7 +178,7 @@
                           </svg>
                         </Link>
                         <Link
-                          :href="route('bills.edit', bill.id)"
+                          :href="route('bills.readings', bill.id)"
                           class="text-indigo-600 hover:text-indigo-900 ml-5"
                           ><svg
                             xmlns="http://www.w3.org/2000/svg"

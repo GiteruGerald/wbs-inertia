@@ -13,7 +13,7 @@ class WaterReading extends Model
 
     public function unit()
     {
-        return $this->belongsTo(Unit::class);
+        return $this->belongsTo(Unit::class)->select(['id','unit_no']);
     }
 
     public function bill()

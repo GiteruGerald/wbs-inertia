@@ -84,32 +84,6 @@
                     {{ bill.bill_date }}
                   </dd>
                 </div>
-                <div
-                  class="
-                    bg-gray-50
-                    px-4
-                    py-5
-                    sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-                  "
-                >
-                  <dt class="text-sm font-medium text-gray-500">Issue Date</dt>
-                  <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                    {{ bill.issue_date }}
-                  </dd>
-                </div>
-                <div
-                  class="
-                    bg-gray-50
-                    px-4
-                    py-5
-                    sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-                  "
-                >
-                  <dt class="text-sm font-medium text-gray-500">Due Date</dt>
-                  <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                    {{ bill.due_date }}
-                  </dd>
-                </div>
                 <hr />
                 <!-- Reading Details -->
                 <div>
@@ -212,11 +186,11 @@
                                 <p
                                   class="ml-8 text-xs mt-2 text-red-600"
                                   v-if="
-                                    form.errors[`readings.${index}.previous`]
+                                    form.errors[`units.${index}.previous`]
                                   "
                                 >
                                   {{
-                                    form.errors[`readings.${index}.previous`]
+                                    form.errors[`units.${index}.previous`]
                                   }}
                                 </p>
                               </div>
@@ -239,10 +213,10 @@
                                 <p
                                   class="ml-8 text-xs mt-2 text-red-600"
                                   v-if="
-                                    form.errors[`readings.${index}.current`]
+                                    form.errors[`units.${index}.current`]
                                   "
                                 >
-                                  {{ form.errors[`readings.${index}.current`] }}
+                                  {{ form.errors[`units.${index}.current`] }}
                                 </p>
                               </div>
                             </div>
@@ -280,142 +254,6 @@
                 </div>
               </div>
 
-              <div class="overflow-hidden bg-white mt-5 shadow sm:rounded-lg">
-                <div>
-                  <div class="px-4 py-5 sm:px-6">
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                      Readings Recorded for
-                      <b>{{ bill.month }}: {{ apartment.name }}</b>
-                    </p>
-                    <p class="mt-1 text-xs text-gray-500">
-                      Rate: <b>{{ bill.rate }}</b>
-                    </p>
-                  </div>
-                </div>
-                <div class="border-t px-5 border-gray-200">
-                  <dl>
-                    <table
-                      class="min-w-full py-3 px-4 divide-y divide-gray-200"
-                    >
-                      <thead class="bg-gray-50">
-                        <tr>
-                          <th
-                            scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-gray-500
-                              uppercase
-                              tracking-wider
-                            "
-                          >
-                            Unit
-                          </th>
-                          <th
-                            scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-gray-500
-                              uppercase
-                              tracking-wider
-                            "
-                          >
-                            Previous
-                          </th>
-                          <th
-                            scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-gray-500
-                              uppercase
-                              tracking-wider
-                            "
-                          >
-                            Current
-                          </th>
-                          <th
-                            scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-gray-500
-                              uppercase
-                              tracking-wider
-                            "
-                          >
-                            Units Consumed
-                          </th>
-                          <th
-                            scope="col"
-                            class="
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-gray-500
-                              uppercase
-                              tracking-wider
-                            "
-                          >
-                            Amount
-                          </th>
-                          <th
-                            scope="col"
-                            class="
-                              flex
-                              space-x-4
-                              px-6
-                              py-3
-                              text-left text-xs
-                              font-medium
-                              text-gray-500
-                              uppercase
-                              tracking-wider
-                            "
-                          ></th>
-                        </tr>
-                      </thead>
-                      <tbody class="bg-white divide-y divide-gray-200">
-                        <tr v-for="reading in readings" :key="reading.id">
-                          <td class="px-6 py-4 whitespace-nowrap">
-                            {{ reading.unit.unit_no }}
-                          </td>
-                          <td class="px-6 py-4 whitespace-nowrap">
-                            {{ reading.previous }}
-                          </td>
-                          <td class="px-6 py-4 whitespace-nowrap">
-                            {{ reading.current }}
-                          </td>
-                          <td class="px-6 py-4 whitespace-nowrap">
-                            {{
-                              unitsConsumed(reading.previous, reading.current)
-                            }}
-                          </td>
-                          <td class="px-6 py-4 whitespace-nowrap">
-                            {{
-                              chargeAmount(
-                                reading.current,
-                                reading.previous,
-                                bill.rate
-                              )
-                            }}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </dl>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -460,14 +298,9 @@ const getUnits = async () => {
   });
 };
 
-const getReadings = async () => {
-  await axios.get(`/bills/${props.bill.id}/readings`).then((res) => {
-    readings.value = res.data;
-  });
-};
+
 onMounted(() => {
   getUnits();
-  getReadings();
 });
 </script>
   

@@ -26,6 +26,7 @@
         "vue-loader": "^17.0.0"
     },
     "dependencies": {
-        "@heroicons/vue": "^2.0.13"
+        "@heroicons/vue": "^2.0.13",
+        "moment": "^2.29.4"
     }
 }

@@ -1,5 +1,5 @@
 import { Inertia } from "@inertiajs/inertia";
-
+import moment from "moment/moment";
 export default function useHelper() {
     const unitsConsumed = (prev, curr) => {
         return curr - prev;
@@ -9,18 +9,9 @@ export default function useHelper() {
         return (curr - prev) * rate;
     };
 
-    const searchApartment = (apartment) => {
-        Inertia.get(
-            "/apartments",
-            {
-                search: apartment,
-            },
-            {
-                preserveState: true,
-                replace: true,
-            }
-        );
-    };
+    const formatDate = (value)=>{
+        return moment(value).format('LL');
+    }
 
     const monthNames = [
         "January",
@@ -45,7 +36,7 @@ export default function useHelper() {
     return {
         unitsConsumed,
         chargeAmount,
-        searchApartment,
-        currentDate
+        currentDate,
+         formatDate
     };
 }

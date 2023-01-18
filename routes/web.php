@@ -34,7 +34,7 @@ Route::resource('units', UnitController::class);
 Route::resource('readings', WaterReadingController::class);
 Route::resource('bills', BillsController::class);
 Route::get('apartments/{apartment}/units', [ApartmentController::class,'getUnitsByApartment'])->name('apartment.units');
-Route::get('bills/{bill}/readings', [BillsController::class,'getReadingsByBill'])->name('bill.readings');
+Route::get('bills/{bill}/readings', [BillsController::class,'getReadingsByBill'])->name('bills.readings');
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
