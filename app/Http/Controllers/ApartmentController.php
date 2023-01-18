@@ -120,7 +120,8 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        $apartment->units->readings()->delete();
+
+         $apartment->readings()->delete();
         $apartment->units()->delete();
         $apartment->delete();
         return Redirect::route('apartments.index'); 
