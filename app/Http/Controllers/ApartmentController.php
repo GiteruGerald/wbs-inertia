@@ -60,9 +60,9 @@ class ApartmentController extends Controller
      */
     public function store(ApartmentRequest $request)
     {
-        Apartment::create($request->validated());
+        $apartment = Apartment::create($request->validated());
 
-        return Redirect::route('apartments.index');
+        return Redirect::route('apartments.show', $apartment->id);
         
     }
 

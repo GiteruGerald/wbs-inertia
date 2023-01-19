@@ -18,6 +18,6 @@ class Bill extends Model
 
     public function readings()
     {
-        return $this->belongsToMany(WaterReading::class);
+        return $this->hasMany(WaterReading::class);
     }
 }

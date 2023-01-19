@@ -20,4 +20,5 @@ class WaterReading extends Model
     {
         return $this->belongsTo(Bill::class)->select(['id','month', 'rate']);
     }
+
 }

@@ -123,6 +123,15 @@ class BillsController extends Controller
         return Redirect::route('bills.index');
     }
 
+    public function destroy( Bill $bill)
+    {
+        $bill->readings()->delete();
+        $bill->delete();
+
+        return Redirect::route('bills.index');
+    }
+
+
     public function getReadingsByBill(Bill $bill)
     {
         $readings = WaterReading::query()->where('bill_id',$bill->id)->with('unit')->latest()->get();

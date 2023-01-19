@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UnitRequest;
+use App\Http\Requests\UnRequest;
 use App\Http\Resources\ApartmentResource;
 use App\Http\Resources\UnitResource;
 use App\Models\Apartment;
@@ -129,6 +130,13 @@ class UnitController extends Controller
         return Redirect::route('units.index');
     }
 
+    public function updateUnit(UnRequest $request, Unit $unit)
+    {
+        $unit->update($request->validated());
+
+        return Redirect::route('units.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -139,6 +147,6 @@ class UnitController extends Controller
     {
         $unit->readings()->delete();
         $unit->delete();
-        return Redirect::back();
+        return Redirect::route('units.index'); 
     }
 }

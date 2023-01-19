@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReadingRequest;
 use App\Http\Requests\WaterReadingRequest;
 use App\Http\Resources\ApartmentResource;
 use App\Http\Resources\UnitResource;
@@ -10,6 +11,7 @@ use App\Models\Apartment;
 use App\Models\Bill;
 use App\Models\Unit;
 use App\Models\WaterReading;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Illuminate\Support\Arr;
@@ -128,11 +130,11 @@ class WaterReadingController extends Controller
      */
     public function edit(WaterReading $reading)
     {
+        // return  $reading->with(['unit','bill'])->first(); 
         return Inertia::render(
             'Readings/Edit',
             [
-                'reading' => $reading,
-                'units' => UnitResource::collection(Unit::all()),
+                'reading' => $reading->with(['unit','bill'])->first(),
             ]
         );
     }
@@ -146,6 +148,14 @@ class WaterReadingController extends Controller
      */
     public function update(WaterReadingRequest $request, WaterReading $reading)
     {
+        $reading->update($request->validated());
+
+        return Redirect::route('readings.index');
+    }
+
+    public function updateReading(ReadingRequest $request, WaterReading $reading)
+    {
+        
         $reading->update($request->validated());
 
         return Redirect::route('readings.index');

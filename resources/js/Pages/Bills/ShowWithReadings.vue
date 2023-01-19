@@ -41,8 +41,6 @@
               Print
             </button>
           </div>
-          <!-- TODO: Add Go to Edit Link -->
-          <!-- TODO: Add Delete Button -->
         </div>
         <div class="flex print-container">
           <div class="container px-5 mx-auto flex">

@@ -82,9 +82,6 @@
               </div>
             </div>
           </div>
-          <!-- TODO: Add Go to Edit Link -->
-
-          <!-- TODO: Add Delete Button -->
         </div>
         <div class="flex">
           <div class="container px-5 mx-auto flex">
@@ -296,7 +293,8 @@
                     </h3>
                   </div>
                 </div>
-                <div v-if="!units" class="border-t border-gray-200">
+                <!-- FIXME - Check these v-if/v-else statements -->
+                <div v-if="hasUnits" class="border-t border-gray-200">
                   <dl>
                     <div
                       class="
@@ -433,7 +431,7 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import { HomeIcon } from "@heroicons/vue/20/solid";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 // import route from "vendor/tightenco/ziggy/src/js";
 
@@ -479,5 +477,12 @@ const destroyApartment = (id) => {
     Inertia.delete(route("apartments.destroy", id));
   }
 };
+let hasUnits = ref()
+onMounted(()=>{
+  console.log(props.units[0]);
+  if(props.units[0] === null|undefined){
+    hasUnits.value = false
+  }
+})
 </script>
   

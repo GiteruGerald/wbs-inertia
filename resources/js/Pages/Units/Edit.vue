@@ -74,42 +74,6 @@
                         ></div>
                       </div>
                     </div>
-                    <!-- Apartment  -->
-                    <div>
-                      <label
-                        for="location"
-                        class="block text-sm font-medium text-gray-700"
-                        >Apartment</label
-                      >
-                      <div class="mt-1 flex rounded-md shadow-sm">
-                        <select
-                          class="
-                            block
-                            w-0.25
-                            flex-1
-                            rounded-none rounded-r-md
-                            border-gray-300
-                            focus:border-indigo-500 focus:ring-indigo-500
-                            sm:text-sm
-                          "
-                          v-model="form.apartment_id"
-                        >
-                          <option
-                            v-for="apartment in apartments.data"
-                            :value="apartment.id"
-                            :key="apartment.id"
-                          >
-                            {{ apartment.name }}
-                          </option>
-                        </select>
-                        <!-- Display error msg -->
-                        <div
-                          v-if="errors.apartment_id"
-                          v-text="errors.apartment_id"
-                          class="text-red-800 text-sm mt-2"
-                        ></div>
-                      </div>
-                    </div>
                     <!-- Type -->
                     <div>
                       <label
@@ -231,7 +195,6 @@ const props = defineProps({
 // const form = useForm(props.unit)
 const form = useForm({
   unit_no: props.unit.unit_no,
-  apartment_id: props.unit.apartment_id,
   meter_no: props.unit.meter_no,
   type: props.unit.type,
 });
@@ -239,11 +202,9 @@ const form = useForm({
 
 
 const updateUnit = () => {
-    Inertia.post(`/units/${props.unit.id}`, {
-  _method: 'put',
+    Inertia.post(`/units/${props.unit.id}/update`, {
   
   unit_no:form.unit_no,
-  apartment_id:form.apartment_id,
   meter_no:form.meter_no,
   type:form.type,
     });

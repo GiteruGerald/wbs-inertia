@@ -49,78 +49,11 @@
                       <label
                         for="unit"
                         class="block text-sm font-medium text-gray-700"
-                        >Unit</label
+                        >Edit Unit {{ reading.unit.unit_no }}   </label
                       >
-                      <div class="mt-1 flex rounded-md shadow-sm">
-                        <select
-                          class="
-                            block
-                            w-0.25
-                            flex-1
-                            rounded-none rounded-r-md
-                            border-gray-300
-                            focus:border-indigo-500 focus:ring-indigo-500
-                            sm:text-sm
-                          "
-                          v-model="form.unit_id"
-                        >
-                          <option
-                            v-for="unit in units.data"
-                            :value="unit.id"
-                            :key="unit.id"
-                          >
-                            {{ unit.unit_no }}
-                          </option>
-                        </select>
-                        <!-- Display error msg -->
-                        <div
-                          v-if="errors.unit_id"
-                          v-text="errors.unit_id"
-                          class="text-red-800 text-sm mt-2"
-                        ></div>
-                      </div>
-                    </div>
-                    <!-- Month -->
-                    <div>
-                      <label
-                        for="month"
-                        class="block text-sm font-medium text-gray-700"
-                        >Month</label
-                      >
-                      <div class="mt-1 flex rounded-md shadow-sm">
-                        <select
-                          class="
-                            block
-                            w-full
-                            flex-1
-                            rounded-none rounded-r-md
-                            border-gray-300
-                            focus:border-indigo-500 focus:ring-indigo-500
-                            sm:text-sm
-                          "
-                          v-model="form.month"
-                        >
-                          <option hidden>Select Month</option>
-                          <option value="January">January</option>
-                          <option value="February">February</option>
-                          <option value="March">March</option>
-                          <option value="April">April</option>
-                          <option value="May">May</option>
-                          <option value="June">June</option>
-                          <option value="July">July</option>
-                          <option value="August">August</option>
-                          <option value="September">September</option>
-                          <option value="October">October</option>
-                          <option value="November">November</option>
-                          <option value="December">December</option>
-                        </select>
-                        <!-- Display error msg -->
-                        <div
-                          v-if="errors.month"
-                          v-text="errors.month"
-                          class="text-red-800 text-sm mt-2"
-                        ></div>
-                      </div>
+                      <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                        Bill Month: {{ reading.bill.month }}
+                      </p>
                     </div>
                     <!-- Previous -->
                     <div>
@@ -184,37 +117,6 @@
                         ></div>
                       </div>
                     </div>
-                    <!-- Rate -->
-                    <div>
-                      <label
-                        for="rate"
-                        class="block text-sm font-medium text-gray-700"
-                        >Rate per unit</label
-                      >
-                      <div class="mt-1 flex rounded-md shadow-sm">
-                        <input
-                          v-model="form.rate"
-                          type="number"
-                          id="rate"
-                          class="
-                            block
-                            w-full
-                            flex-1
-                            rounded-none rounded-r-md
-                            border-gray-300
-                            focus:border-indigo-500 focus:ring-indigo-500
-                            sm:text-sm
-                          "
-                          placeholder="Rate"
-                        />
-                        <!-- Display error msg -->
-                        <div
-                          v-if="errors.rate"
-                          v-text="errors.rate"
-                          class="text-red-800 text-sm mt-2"
-                        ></div>
-                      </div>
-                    </div>
                   </div>
                   <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                     <button
@@ -264,28 +166,22 @@ let processing = ref(false);
 
 const props = defineProps({
   reading: Object,
-  units: Object,
+  // units: Object,
   errors: Object,
 });
 
 const form = useForm({
   unit_id: props.reading.unit_id,
-  month: props.reading.month,
   previous: props.reading.previous,
   current: props.reading.current,
-  rate: props.reading.rate,
 });
 
 
 const updateReading = () => {
   // processing.value = true;
-  Inertia.post(`/readings/${props.reading.id}`, {
-    _method: "put",
-    unit_id: form.unit_id,
-    month: form.month,
+  Inertia.post(`/readings/${props.reading.id}/update`, {
     previous: form.previous,
     current: form.current,
-    rate: form.rate,
   });
 };
 </script>

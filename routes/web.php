@@ -35,6 +35,8 @@ Route::resource('readings', WaterReadingController::class);
 Route::resource('bills', BillsController::class);
 Route::get('apartments/{apartment}/units', [ApartmentController::class,'getUnitsByApartment'])->name('apartment.units');
 Route::get('bills/{bill}/readings', [BillsController::class,'getReadingsByBill'])->name('bills.readings');
+Route::post('readings/{reading}/update', [WaterReadingController::class,'updateReading'])->name('readings.updated');
+Route::post('units/{unit}/update', [UnitController::class,'updateUnit'])->name('units.updated');
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
