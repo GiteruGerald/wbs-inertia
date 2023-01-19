@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\BillsController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\WaterReadingController;
 use Illuminate\Foundation\Application;
@@ -29,6 +30,7 @@ Route::get('/', function () {
 });
 
 
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::resource('apartments', ApartmentController::class);
 Route::resource('units', UnitController::class);
 Route::resource('readings', WaterReadingController::class);
@@ -37,8 +39,9 @@ Route::get('apartments/{apartment}/units', [ApartmentController::class,'getUnits
 Route::get('bills/{bill}/readings', [BillsController::class,'getReadingsByBill'])->name('bills.readings');
 Route::post('readings/{reading}/update', [WaterReadingController::class,'updateReading'])->name('readings.updated');
 Route::post('units/{unit}/update', [UnitController::class,'updateUnit'])->name('units.updated');
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';
