@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ApartmentRequest;
 use App\Http\Resources\ApartmentResource;
 use App\Models\Apartment;
+use App\Models\Bill;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -130,8 +131,18 @@ class ApartmentController extends Controller
 
     public function getUnitsByApartment(Apartment $apartment)
     {
-         $units = Unit::select('id','unit_no','meter_no')->where('apartment_id',$apartment->id)->latest()->get();
+        // FIXME: how to pass in previous water reading based on current month
+        $currentMonth = date('F');
+        $previousMonth = date("F", strtotime ( '-1 month' , strtotime ( $currentMonth ) )) ;
+        $bill = $apartment->bills()->where('month',$previousMonth)->get();
+        return response()->json($bill);
+                // return response()->json([$currentMonth, $newdate]);
 
+         $units = Unit::
+                        join('water_readings','units.id','=','water_readings.unit_id')
+                        ->select('units.*','water_readings.previous')
+                        ->where('apartment_id',$apartment->id)
+                        ->latest()->get();
          return response()->json($units);
     }
 }
