@@ -24,18 +24,18 @@ class WaterReadingRequest extends FormRequest
     public function rules()
     {
         return [
-            'units.*.previous' => 'required|numeric|lte:units.*.current',
-            'units.*.current' => 'required|numeric|gte:units.*.previous',
+            'units.*.current' => 'required|numeric|lte:units.*.present',
+            'units.*.present' => 'required|numeric|gte:units.*.current',
         ];
     }
 
     public function messages()
     {
         return [
-            'units.*.current.gte' => 'The current reading must be greater than or equal to the previous reading ',
-            'units.*.previous.lte' => 'The previous reading must be less than or equal to the current reading ',
-            'units.*.previous.required' => 'The previous reading value is required',
+            'units.*.present.gte' => 'The present reading must be greater than or equal to the previous reading ',
+            'units.*.current.lte' => 'The current reading must be less than or equal to the present reading ',
             'units.*.current.required' => 'The current reading value is required',
+            'units.*.present.required' => 'The present reading value is required',
         ];
     }
 }

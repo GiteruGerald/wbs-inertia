@@ -226,7 +226,7 @@
 
                               <div class="flex-auto">
                                 <input
-                                  v-model="reading.previous"
+                                  v-model="reading.current"
                                   type="number"
                                   class="
                                     w-full
@@ -239,21 +239,22 @@
                                   "
                                   :aria-label="`Meter {index+1} No`"
                                   placeholder="Previous"
+                                  
                                 />
                                 <p
                                   class="ml-8 text-xs mt-2 text-red-600"
                                   v-if="
-                                    form.errors[`units.${index}.previous`]
+                                    form.errors[`units.${index}.current`]
                                   "
                                 >
                                   {{
-                                    form.errors[`units.${index}.previous`]
+                                    form.errors[`units.${index}.current`]
                                   }}
                                 </p>
                               </div>
                               <div class="flex-auto">
                                 <input
-                                  v-model="reading.current"
+                                  v-model="reading.present"
                                   type="number"
                                   class="
                                     w-full
@@ -270,10 +271,10 @@
                                 <p
                                   class="ml-8 text-xs mt-2 text-red-600"
                                   v-if="
-                                    form.errors[`units.${index}.current`]
+                                    form.errors[`units.${index}.present`]
                                   "
                                 >
-                                  {{ form.errors[`units.${index}.current`] }}
+                                  {{ form.errors[`units.${index}.present`] }}
                                 </p>
                               </div>
                             </div>
@@ -361,9 +362,11 @@ const destroyBill = (id)=>{
   }
 }
 onMounted(() => {
-  getUnits();
   if(props.bill.status === 1) {
-     processed.value= true
+    processed.value= true
+  }else{
+
+    getUnits();
   }
   // console.log(props.bill.status);
 });

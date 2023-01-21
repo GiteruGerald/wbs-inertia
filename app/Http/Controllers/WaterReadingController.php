@@ -45,6 +45,7 @@ class WaterReadingController extends Controller
     public function create()
     {
         return Inertia::render(
+            // FIXME: Check this view
             'Readings/Create copy',
             [
                 'apartments' => ApartmentResource::collection(Apartment::all()),
@@ -79,8 +80,8 @@ class WaterReadingController extends Controller
                 $new_insert_array[] = array(
                     'unit_id' => $r['id'],
                     'bill_id' => $billId,
-                    'previous' =>  $r['previous'],
-                    'current' => $r['current']
+                    'previous' =>  $r['current'],
+                    'current' => $r['present']
                 );
             }
             $record = WaterReading::insert($new_insert_array);
@@ -112,7 +113,7 @@ class WaterReadingController extends Controller
         $bill = $reading->bill()->first();
 
         return Inertia::render(
-            'Readings/Show',
+            'Readings/Invoice',
             [
                 'reading' => $reading,
                 'unit' => $unit,

@@ -134,15 +134,26 @@ class ApartmentController extends Controller
         // FIXME: how to pass in previous water reading based on current month
         $currentMonth = date('F');
         $previousMonth = date("F", strtotime ( '-1 month' , strtotime ( $currentMonth ) )) ;
-        $bill = $apartment->bills()->where('month',$previousMonth)->get();
-        return response()->json($bill);
-                // return response()->json([$currentMonth, $newdate]);
+        $mockpresentMonth = date("F", strtotime ( '+2 month' , strtotime ( $currentMonth ) )) ;
+        $mockpreviousMonth = date("F", strtotime ( '-1 month' , strtotime ( $mockpresentMonth ) )) ;
+        // $bill = $apartment->bills()->where('month',$mockpreviousMonth)
+        // return response()->json([$mockpresentMonth, $mockpreviousMonth]);
+        $bill = $apartment->bills()->where('month',$mockpreviousMonth)
+                            ->join('water_readings','bills.id','=','water_readings.bill_id')
+                            ->join('units','water_readings.unit_id','=','units.id')
+                            ->select('units.*','units.meter_no','water_readings.current')
+                            ->orderBy('units.id', 'ASC')
+                            ->get();
+        if(count($bill)!==0){
+            return response()->json($bill);
+        }else{
+            $units = Unit::where('apartment_id',$apartment->id)
+                           ->latest()->get();
+            return response()->json($units);
+        }
 
-         $units = Unit::
-                        join('water_readings','units.id','=','water_readings.unit_id')
-                        ->select('units.*','water_readings.previous')
-                        ->where('apartment_id',$apartment->id)
-                        ->latest()->get();
-         return response()->json($units);
+
+        //  Fetch bill of previous month based on apartment 
+            // ->get readings (prev)
     }
 }
