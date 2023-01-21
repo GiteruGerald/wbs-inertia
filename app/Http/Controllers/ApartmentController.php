@@ -131,13 +131,8 @@ class ApartmentController extends Controller
 
     public function getUnitsByApartment(Apartment $apartment)
     {
-        // FIXME: how to pass in previous water reading based on current month
         $currentMonth = date('F');
         $previousMonth = date("F", strtotime ( '-1 month' , strtotime ( $currentMonth ) )) ;
-        // $mockpresentMonth = date("F", strtotime ( '+2 month' , strtotime ( $currentMonth ) )) ;
-        // $mockpreviousMonth = date("F", strtotime ( '-1 month' , strtotime ( $mockpresentMonth ) )) ;
-        // $bill = $apartment->bills()->where('month',$mockpreviousMonth)
-        // return response()->json([$mockpresentMonth, $mockpreviousMonth]);
         $bill = $apartment->bills()->where('month',$previousMonth)
                             ->join('water_readings','bills.id','=','water_readings.bill_id')
                             ->join('units','water_readings.unit_id','=','units.id')
@@ -152,8 +147,5 @@ class ApartmentController extends Controller
             return response()->json($units);
         }
 
-
-        //  Fetch bill of previous month based on apartment 
-            // ->get readings (prev)
     }
 }
