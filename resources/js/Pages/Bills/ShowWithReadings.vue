@@ -60,71 +60,62 @@
               "
             >
               <div
-                class="overflow-hidden bg-white shadow sm:rounded-lg"
-                ref="printable"
+                class="overflow-hidden bg-white mt-5 shadow sm:rounded-lg"
+                v-for="(reading, index) in readings"
+                :key="reading.id"
               >
-                <!-- Apartment Details -->
-                <div class="grid grid-cols-4 gap-4">
-                  <div
-                    class="
-                      border-solid
-                      px-4
-                      py-5
-                      sm:px-6
-                    "
-                  >
-                    <h3 class="text-lg font-medium leading-6 text-gray-900">
-                      Bill Month: {{ bill.month }}
-                    </h3>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                      {{ apartment.name }}
-                    </p>
-                  </div>
-                </div>
-                <hr />
-              </div>
-
-              <div class="overflow-hidden bg-white mt-5 shadow sm:rounded-lg">
                 <div>
-                  <div class="px-4 py-5 sm:px-6">
-                    <Details>
-                      <p class="mt-1 text-xs text-gray-500">
-                        Rate: <b>{{ bill.rate }}</b>
+                  <div class="grid grid-cols-3 gap-3">
+                    <div class="border-solid pl-2 py-3 sm:px-6">
+                      <h3 class="text-lg font-medium leading-6 text-gray-900">
+                        Bill Month: {{ bill.month }}
+                      </h3>
+                      <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                        {{ apartment.name }} | Unit: <b>{{ reading.unit.unit_no }}</b>
                       </p>
-                      <p
-                        class="
-                          mt-1
-                          font-weight:500
-                          text-left
-                          max-w-2xl
-                          text-xs text-gray-500
-                        "
-                      >
-                        Bill Date : <b> {{ formatDate( bill.bill_date)   }}</b>
-                      </p>
-                      <p
-                        class="
-                          mt-1
-                          font-weight:500
-                          text-left
-                          max-w-2xl
-                          text-xs text-gray-500
-                        "
-                      >
-                        Date of Issu <b>e : {{ formatDate( bill.issue_date) }}</b>
-                      </p>
-                      <p
-                        class="
-                          mt-1
-                          font-weight:500
-                          text-left
-                          max-w-2xl
-                          text-xs text-gray-500
-                        "
-                      >
-                        Due Date : <b> {{ formatDate( bill.due_date) }}</b>
-                      </p>
-                    </Details>
+                    </div>
+                    <div></div>
+                    <div>
+                      <div class="px-4 sm:px-6">
+                        <p class="mt-1 text-xs text-gray-500">
+                          Rate: <b>{{ bill.rate }}</b>
+                        </p>
+                        <p
+                          class="
+                            mt-1
+                            font-weight:500
+                            text-left
+                            max-w-2xl
+                            text-xs text-gray-500
+                          "
+                        >
+                          Bill Date : <b> {{ formatDate(bill.bill_date) }}</b>
+                        </p>
+                        <p
+                          class="
+                            mt-1
+                            font-weight:500
+                            text-left
+                            max-w-2xl
+                            text-xs text-gray-500
+                          "
+                        >
+                          Issue Date
+                          <b> : {{ formatDate(bill.issue_date) }}</b>
+                        </p>
+                        <p
+                          class="
+                            mt-1
+                            font-weight:500
+                            text-left
+                            max-w-2xl
+                            text-xs text-gray-500
+                          "
+                        >
+                          Due Date : <b> {{ formatDate(bill.due_date) }}</b>
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="border-t px-5 border-gray-200">
@@ -146,7 +137,7 @@
                               tracking-wider
                             "
                           >
-                            Unit
+                            Meter No
                           </th>
                           <th
                             scope="col"
@@ -221,12 +212,9 @@
                         </tr>
                       </thead>
                       <tbody class="bg-white divide-y divide-gray-200">
-                        <tr
-                          v-for="(reading, index) in readings"
-                          :key="reading.id"
-                        >
+                        <tr>
                           <td class="px-6 py-4 whitespace-nowrap">
-                            {{ reading.unit.unit_no }}
+                            {{ reading.unit.meter_no }}
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             {{ reading.previous }}
@@ -249,6 +237,7 @@
                             }}
                           </td>
                         </tr>
+                        <div class="pagebreak"></div>
                       </tbody>
                     </table>
                   </dl>
@@ -298,6 +287,10 @@ const { unitsConsumed, chargeAmount, formatDate } = useHelper();
     left: 0px;
     width: 100%;
     top: 0px;
+  }
+  .pagebreak {
+    clear: both;
+    page-break-after: always;
   }
 }
 </style>
