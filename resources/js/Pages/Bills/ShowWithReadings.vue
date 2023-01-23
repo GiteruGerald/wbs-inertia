@@ -13,7 +13,7 @@
         <div class="flex justify-between m-2 p-2">
           <div>
             <Link
-              href="/bills"
+              :href="route('bills.index')"
               class="
                 px-4
                 py-2
@@ -27,6 +27,7 @@
           </div>
           <div></div>
           <div>
+
             <button
               class="
                 px-4
@@ -71,7 +72,8 @@
                         Bill Month: {{ bill.month }}
                       </h3>
                       <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                        {{ apartment.name }} | Unit: <b>{{ reading.unit.unit_no }}</b>
+                        {{ apartment.name }} | Unit:
+                        <b>{{ reading.unit.unit_no }}</b>
                       </p>
                     </div>
                     <div></div>

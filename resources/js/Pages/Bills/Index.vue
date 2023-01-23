@@ -81,7 +81,9 @@
                         uppercase
                         tracking-wider
                       "
-                    >Apartment</th>
+                    >
+                      Apartment
+                    </th>
                     <th
                       scope="col"
                       class="
@@ -141,7 +143,7 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                   <tr v-for="(bill, index) in bills.data" :key="bill.id">
                     <td class="px-6 py-4 whitespace-nowrap">
-                      {{ index++ }}
+                      {{ index }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       {{ bill.apartment[0].name }}
@@ -152,12 +154,39 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                       {{ bill.rate }}
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap" v-if="bill.status === 0">
-                      <span class="bg-pink-100 text-pink-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">Not Recorded</span>
-                      </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap"
+                      v-if="bill.status === 0"
+                    >
+                      <span
+                        class="
+                          bg-pink-100
+                          text-pink-800 text-sm
+                          font-medium
+                          mr-2
+                          px-2.5
+                          py-0.5
+                          rounded
+                          dark:bg-pink-900 dark:text-pink-300
+                        "
+                        >Not Recorded</span
+                      >
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap" v-else>
-                      <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Recorded</span>
-                      </td>
+                      <span
+                        class="
+                          bg-green-100
+                          text-green-800 text-sm
+                          font-medium
+                          mr-2
+                          px-2.5
+                          py-0.5
+                          rounded
+                          dark:bg-green-900 dark:text-green-300
+                        "
+                        >Recorded</span
+                      >
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="flex">
                         <Link
@@ -197,7 +226,7 @@
                             />
                           </svg>
                         </Link>
-                        
+
                         <Link
                           :href="route('bills.readings', bill.id)"
                           class="text-indigo-600 hover:text-indigo-900 ml-5"
@@ -212,7 +241,7 @@
                             <path
                               stroke-linecap="round"
                               stroke-linejoin="round"
-                              d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+                              d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"
                             />
                           </svg>
                         </Link>
@@ -261,7 +290,6 @@ const props = defineProps({
 });
 const search = ref("");
 
-
 watch(search, (value) => {
   Inertia.get(
     "/bills",
@@ -275,11 +303,10 @@ watch(search, (value) => {
   );
 });
 
-const destroyBill = (id)=>{
-  if(confirm("Are you sure you want to delete this bill?")){
-    Inertia.delete(route('bills.destroy',id));
+const destroyBill = (id) => {
+  if (confirm("Are you sure you want to delete this bill?")) {
+    Inertia.delete(route("bills.destroy", id));
   }
-}
-
+};
 </script>
   
