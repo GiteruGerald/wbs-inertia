@@ -11,21 +11,18 @@ use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         $totalApartments = Apartment::all()->count();
         $totalUnits = Unit::all()->count();
-        $latestBills = Bill::query()->latest('created_at')->get();
-        $latestReading = WaterReading::query()->latest('created_at')->first();
+        $latestBills = Bill::query()->with('apartment')->latest('created_at')->get();
 
-          
-        // return response()->json($latestReading);
         return Inertia::render('Dashboard', [
 
             'totalApartments' => $totalApartments,
             'totalUnits' => $totalUnits,
             'latestBills' => $latestBills,
-            'latestReading'=> $latestReading,
         ]);
     }
 }
