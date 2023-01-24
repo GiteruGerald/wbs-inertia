@@ -63,7 +63,7 @@ class ApartmentController extends Controller
     {
         $apartment = Apartment::create($request->validated());
 
-        return Redirect::route('apartments.show', $apartment->id);
+        return Redirect::route('apartments.show', $apartment->id)->with('toast', 'Apartment created successfully');
         
     }
 
@@ -109,7 +109,7 @@ class ApartmentController extends Controller
     {
         $apartment->update($request->validated());
 
-        return Redirect::route('apartments.index'); 
+        return Redirect::route('apartments.index')->with('toast', 'Apartment edited successfully'); 
         
     }
 
@@ -125,7 +125,7 @@ class ApartmentController extends Controller
          $apartment->readings()->delete();
         $apartment->units()->delete();
         $apartment->delete();
-        return Redirect::route('apartments.index'); 
+        return Redirect::route('apartments.index')->with('toast', 'Apartment deleted successfully'); 
 
     }
 
