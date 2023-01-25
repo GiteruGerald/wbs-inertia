@@ -70,7 +70,7 @@ class BillsController extends Controller
 
         Bill::create($request->validated());
 
-        return Redirect::route('bills.index');
+        return Redirect::route('bills.index')->with('message', 'Bill added successfully');
     }
 
     /**
@@ -120,7 +120,7 @@ class BillsController extends Controller
     {
         $bill->update($request->validated());
 
-        return Redirect::route('bills.index');
+        return Redirect::route('bills.index')->with('message', 'Bill edited successfully');
     }
 
     public function destroy( Bill $bill)
@@ -128,7 +128,7 @@ class BillsController extends Controller
         $bill->readings()->delete();
         $bill->delete();
 
-        return Redirect::route('bills.index');
+        return Redirect::route('bills.index')->with('message', 'Bill deleted successfully');
     }
 
 

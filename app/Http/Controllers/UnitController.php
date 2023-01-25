@@ -78,7 +78,7 @@ class UnitController extends Controller
                 ]);
             }
         }
-        return Redirect::back();
+        return Redirect::back()->with('message', 'Units added successfully');
     }
 
     /**
@@ -127,14 +127,14 @@ class UnitController extends Controller
     {
         $unit->update($request->validated());
 
-        return Redirect::route('units.index');
+        return Redirect::route('units.index')->with('message', 'Unit edited successfully');
     }
 
     public function updateUnit(UnRequest $request, Unit $unit)
     {
         $unit->update($request->validated());
 
-        return Redirect::route('units.index');
+        return Redirect::route('units.index')->with('message', 'Unit edited successfully');
     }
 
     /**
@@ -147,6 +147,6 @@ class UnitController extends Controller
     {
         $unit->readings()->delete();
         $unit->delete();
-        return Redirect::route('units.index'); 
+        return Redirect::route('units.index')->with('message', 'Unit edited successfully'); 
     }
 }

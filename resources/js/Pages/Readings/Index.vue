@@ -16,6 +16,7 @@
           </div>
 
         </div>
+        <!-- TODO: Add search button by Bill/Apartment -->
         <div class="flex flex-col" v-if="!readings.data">
           <p>No reading details added</p>
         </div>

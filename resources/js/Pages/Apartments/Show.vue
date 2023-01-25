@@ -146,6 +146,7 @@
                 </div>
                 <hr />
               </div>
+              <!--TODO: Add House Type dropdown -->
               <div class="overflow-hidden mt-3 bg-white shadow sm:rounded">
                 <form @submit.prevent="saveUnits()">
                   <fieldset class="ml-4">

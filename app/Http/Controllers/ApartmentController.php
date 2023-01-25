@@ -33,10 +33,8 @@ class ApartmentController extends Controller
                 'units' => $apartment->units()->count(),
             ]);
 
-        // return response()->json($apartments);
         return Inertia::render('Apartments/Index',
         [
-            // 'apartments' => ApartmentResource::collection(Apartment::all()),
             'apartments' => $apartments,
             'filters' => $request->only(['search'])
         ]);
@@ -109,7 +107,7 @@ class ApartmentController extends Controller
     {
         $apartment->update($request->validated());
 
-        return Redirect::route('apartments.index')->with('toast', 'Apartment edited successfully'); 
+        return Redirect::route('apartments.index')->with('message', 'Apartment edited successfully'); 
         
     }
 
@@ -125,7 +123,7 @@ class ApartmentController extends Controller
          $apartment->readings()->delete();
         $apartment->units()->delete();
         $apartment->delete();
-        return Redirect::route('apartments.index')->with('toast', 'Apartment deleted successfully'); 
+        return Redirect::route('apartments.index')->with('message', 'Apartment deleted successfully'); 
 
     }
 

@@ -78,9 +78,9 @@ class WaterReadingController extends Controller
                 $bill->update([
                     "status"=>1
                 ]);
-                return Redirect::route("bills.readings", $billId);
+                return Redirect::route("bills.readings", $billId)->with('message', 'Water Reading edited successfully');
             } else {
-                return Redirect::back();
+                return Redirect::back()->with('message', 'Water Reading edited successfully');
             }
         }
 
@@ -139,7 +139,7 @@ class WaterReadingController extends Controller
     {
         $reading->update($request->validated());
 
-        return Redirect::route('readings.index');
+        return Redirect::route('readings.index')->with('message', 'Water Reading edited successfully');
     }
 
     public function updateReading(ReadingRequest $request, WaterReading $reading)
@@ -147,7 +147,7 @@ class WaterReadingController extends Controller
         
         $reading->update($request->validated());
 
-        return Redirect::route('readings.index');
+        return Redirect::route('readings.index')->with('message', 'Water Reading edited successfully');;
     }
 
     /**
@@ -159,6 +159,6 @@ class WaterReadingController extends Controller
     public function destroy(WaterReading $reading)
     {
         $reading->delete();
-        return Redirect::back();
+        return Redirect::back()->with('message', 'Water Reading deleted successfully');;
     }
 }

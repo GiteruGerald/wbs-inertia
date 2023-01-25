@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-const { onMounted }=require("@vue/runtime-core")
+import { ref, onMounted} from 'vue';
 
 const props = defineProps({
         message: String,
@@ -35,10 +35,12 @@ const props = defineProps({
     })
     const showNotification = ref(false)
 
-onMounted(()=>{
-    showNotification.value = true
-    setTimeout(()=> (showNotification.value = false), 2000)
-})
+ onMounted(async()=>{
+    showNotification.value = true;
+    await setTimeout(()=> (showNotification.value = false), 3000);
+    props.message = '';
+
+});
 </script>
 
 <style lang="scss" scoped>
