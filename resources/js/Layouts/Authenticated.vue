@@ -7,14 +7,18 @@ import BreezeNavLink from '@/Components/NavLink.vue';
 import BreezeResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 import ToastList from '@/Components/ToastList.vue';
+import Notification from '@/Components/Notification.vue';
 
 const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
     <div>
-
-        <ToastList/>
+        <div v-if="$page.props.flash.message" class="alert">
+        <!-- {{ $page.props.flash.message }} -->
+        <!-- <ToastList/> -->
+        <Notification :message="$page.props.flash.message"/>
+      </div>
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->

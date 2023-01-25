@@ -9,7 +9,7 @@
         leave-to-class="translate-x-full opacity-0"
         class="fixed top-4 right-4 z-50 space-y-4 w-full max-w-xs"
         >
-
+        
         <ToastListItem
         v-for="(item, index) in toast.items"
         :key="index"
@@ -29,6 +29,9 @@ import toast from "@/Stores/toast";
 
 const page = usePage();
 
+const props = defineProps({
+  message: String
+})
 let removeFinishEventListener = Inertia.on("finish", () => {
   if (page.props.value.toast) {
     toast.add({

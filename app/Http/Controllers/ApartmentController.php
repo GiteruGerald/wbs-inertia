@@ -63,7 +63,7 @@ class ApartmentController extends Controller
     {
         $apartment = Apartment::create($request->validated());
 
-        return Redirect::route('apartments.show', $apartment->id)->with('toast', 'Apartment created successfully');
+        return Redirect::route('apartments.show', $apartment->id)->with('message', 'Apartment created successfully');
         
     }
 
