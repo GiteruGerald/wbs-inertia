@@ -25,14 +25,11 @@ class WaterReadingController extends Controller
      */
     public function index()
     {
-        // return WaterReadingResource::collection(WaterReading::with(['unit','bill'])->latest()->get());
-        // return WaterReading::with('unit')->latest()->get();
-        // return WaterReadingResource::collection(WaterReading::with('unit')->latest()->get());
+        $readings = WaterReadingResource::collection(WaterReading::with(['unit','bill'])->latest()->get());
         return Inertia::render(
             'Readings/Index',
             [
-                'readings' => WaterReadingResource::collection(WaterReading::with(['unit','bill'])->latest()->get())
-                // 'readings' => WaterReading::with('unit')->latest()->get()
+                'readings' => $readings
             ]
         );
     }
@@ -53,15 +50,6 @@ class WaterReadingController extends Controller
             ]
         );
     }
-    // public function create()
-    // {
-    //     return Inertia::render(
-    //         'Readings/Create',
-    //         [
-    //             'units' => UnitResource::collection(Unit::all()),
-    //         ]
-    //     );
-    // }
 
     /**
      * Store a newly created resource in storage.
