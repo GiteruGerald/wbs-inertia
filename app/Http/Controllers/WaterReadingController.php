@@ -25,7 +25,9 @@ class WaterReadingController extends Controller
      */
     public function index()
     {
-        $readings = WaterReadingResource::collection(WaterReading::with(['unit','bill'])->latest()->get());
+        $previousMonth = date("F", strtotime ( '-1 month' , strtotime ( date("F") ) )) ;
+
+        $readings = WaterReadingResource::collection(WaterReading::with(['unit','bill'])->get());
         return Inertia::render(
             'Readings/Index',
             [
