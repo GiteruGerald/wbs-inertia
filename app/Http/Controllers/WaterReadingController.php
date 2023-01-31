@@ -25,9 +25,17 @@ class WaterReadingController extends Controller
      */
     public function index()
     {
-        $previousMonth = date("F", strtotime ( '-1 month' , strtotime ( date("F") ) )) ;
+        $previousMonth = date("F", strtotime ( '-2 month' , strtotime ( date("F") ) )) ;
 
-        $readings = WaterReadingResource::collection(WaterReading::with(['unit','bill'])->get());
+        $readings = WaterReadingResource::collection(WaterReading::with(['unit','bill'])
+                    ->join('units', 'water_readings.unit_id','=','units.id')
+                    ->join('bills', 'water_readings.bill_id','=','bill_id')
+                    ->select('water_readings.*')
+                    ->where('bills.month',$previousMonth)
+                    ->orderBy('units.unit_no')    
+                    ->get());
+
+                    // dd($readings);
         return Inertia::render(
             'Readings/Index',
             [
