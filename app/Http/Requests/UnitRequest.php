@@ -24,7 +24,7 @@ class UnitRequest extends FormRequest
     public function rules()
     {
         return [
-            'units.*.unit_no' => 'required|string',
+            'units.*.unit_no' => 'required|alpha-num',
             'units.*.meter_no' => 'required|numeric',
             'units.*.apartment_id' => 'required'
         ];

@@ -131,12 +131,19 @@ class ApartmentController extends Controller
     {
         $currentMonth = date('F');
         $previousMonth = date("F", strtotime ( '-2 month' , strtotime ( $currentMonth ) )) ;
+
+        // FIXME: Try implementing this
+        // $bill = $apartment->with(['bills','units','readings']) 
+        //         ->whereHas('bills', function($q) use ($previousMonth) {
+        //                             $q->where('month', $previousMonth);
+        //                     })
+        //                     ->get()->sortBy('units.unit_no');
         $bill = $apartment->bills()->where('month',$previousMonth)
                             ->join('water_readings','bills.id','=','water_readings.bill_id')
                             ->join('units','water_readings.unit_id','=','units.id')
-                            ->select('units.*','units.meter_no','water_readings.current')
-                            ->orderBy('units.id', 'ASC')
-                            ->get();
+                            ->select('units.*','units.meter_no','units.unit_no','water_readings.current')
+                            // ->orderBy('units.id', 'ASC')
+                            ->get()->sortBy(['units.unit_no']);
         if(count($bill)!==0){
             return response()->json($bill);
         }else{

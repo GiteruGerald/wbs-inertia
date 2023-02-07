@@ -134,7 +134,7 @@ class BillsController extends Controller
 
     public function getReadingsByBill(Bill $bill)
     {
-        $readings = WaterReading::query()->where('bill_id',$bill->id)->with('unit')->latest()->get();
+        $readings = WaterReading::query()->where('bill_id',$bill->id)->with('unit')->latest()->get()->sortBy(['unit.unit_no']);
 
         return Inertia::render(
             'Bills/ShowWithReadings',

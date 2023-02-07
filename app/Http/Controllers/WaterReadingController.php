@@ -18,24 +18,23 @@ use Illuminate\Support\Arr;
 
 class WaterReadingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $previousMonth = date("F", strtotime ( '-2 month' , strtotime ( date("F") ) )) ;
 
         $readings = WaterReadingResource::collection(WaterReading::with(['unit','bill'])
-                    ->join('units', 'water_readings.unit_id','=','units.id')
-                    ->join('bills', 'water_readings.bill_id','=','bill_id')
-                    ->select('water_readings.*')
-                    ->where('bills.month',$previousMonth)
-                    ->orderBy('units.unit_no')    
-                    ->get());
+                    ->whereHas('bill', function($query) use($previousMonth){
+                        $query->where('month', $previousMonth);
+                    })
+                   
+                    // ->join('units', 'water_readings.unit_id','=','units.id')
+                    // ->join('bills', 'water_readings.bill_id','=','bill_id')
+                    // ->select('water_readings.*')
+                    // ->where('bills.month',$previousMonth)
+                    // ->orderBy('units.unit_no')    
+                    ->get()->sortBy(['unit.unit_no']));
 
-                    // dd($readings);
+        // return response()->json($readings);
         return Inertia::render(
             'Readings/Index',
             [
@@ -43,12 +42,6 @@ class WaterReadingController extends Controller
             ]
         );
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return Inertia::render(
@@ -61,12 +54,6 @@ class WaterReadingController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(WaterReadingRequest $request)
     {
         $readings = json_decode($request->getContent(), true);
@@ -98,12 +85,6 @@ class WaterReadingController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\WaterReading  $waterReading
-     * @return \Illuminate\Http\Response
-     */
     public function show(WaterReading $reading)
     {
         $unit = $reading->unit()->first();
@@ -121,12 +102,6 @@ class WaterReadingController extends Controller
         );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\WaterReading  $reading
-     * @return \Illuminate\Http\Response
-     */
     public function edit(WaterReading $reading)
     {
         // return  $reading->with(['unit','bill'])->first(); 
@@ -138,13 +113,6 @@ class WaterReadingController extends Controller
         );
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\WaterReading  $waterReading
-     * @return \Illuminate\Http\Response
-     */
     public function update(WaterReadingRequest $request, WaterReading $reading)
     {
         $reading->update($request->validated());
@@ -160,12 +128,6 @@ class WaterReadingController extends Controller
         return Redirect::route('readings.index')->with('message', 'Water Reading edited successfully');;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\WaterReading  $reading
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(WaterReading $reading)
     {
         $reading->delete();

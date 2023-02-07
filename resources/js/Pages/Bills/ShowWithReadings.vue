@@ -3,7 +3,7 @@
 
   <BreezeAuthenticatedLayout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+      <h2 class="font-semibold text-xl text-black-800 leading-tight">
         Bill Show
       </h2>
     </template>
@@ -61,25 +61,25 @@
               "
             >
               <div
-                class="overflow-hidden bg-white mt-5 shadow sm:rounded-lg"
+                class="overflow-hidden bg-white mt-5 shadow sm:rounded-lg border-2 border-black"
                 v-for="(reading, index) in readings"
                 :key="reading.id"
               >
                 <div>
                   <div class="grid grid-cols-3 gap-3">
                     <div class="border-solid pl-2 py-3 sm:px-6">
-                      <h3 class="text-lg font-medium leading-6 text-gray-900">
-                        Bill Month: {{ bill.month }}
+                      <h3 class="text-lg font-medium leading-6 text-black-900">
+                        Bill Month: <b>{{ bill.month }}</b>
                       </h3>
-                      <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                        {{ apartment.name }} | Unit:
+                      <p class="mt-1 max-w-2xl text-sm text-black-500">
+                        <b>{{ apartment.name }} </b> | Unit:
                         <b>{{ reading.unit.unit_no }}</b>
                       </p>
                     </div>
                     <div></div>
                     <div>
                       <div class="px-4 sm:px-6">
-                        <p class="mt-1 text-xs text-gray-500">
+                        <p class="mt-1 text-xs text-black-500">
                           Rate: <b>{{ bill.rate }}</b>
                         </p>
                         <p
@@ -88,7 +88,7 @@
                             font-weight:500
                             text-left
                             max-w-2xl
-                            text-xs text-gray-500
+                            text-xs text-black-500
                           "
                         >
                           Bill Date : <b> {{ formatDate(bill.bill_date) }}</b>
@@ -99,7 +99,7 @@
                             font-weight:500
                             text-left
                             max-w-2xl
-                            text-xs text-gray-500
+                            text-xs text-black-500
                           "
                         >
                           Issue Date
@@ -111,21 +111,21 @@
                             font-weight:500
                             text-left
                             max-w-2xl
-                            text-xs text-gray-500
+                            text-xs text-black-500
                           "
                         >
-                          Due Date : <b> {{ formatDate(bill.due_date) }}</b>
+                          Due Date : <b class="bg-red-100 rounded"> {{ formatDate(bill.due_date) }}</b>
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="border-t px-5 border-gray-200">
+                <div class="border-t px-5 border-black-200">
                   <dl>
                     <table
-                      class="min-w-full py-3 px-4 divide-y divide-gray-200"
+                      class="min-w-full py-3 px-4 divide-y divide-black-200"
                     >
-                      <thead class="bg-gray-50">
+                      <thead class="bg-black-50">
                         <tr>
                           <th
                             scope="col"
@@ -133,8 +133,9 @@
                               px-6
                               py-3
                               text-left text-xs
-                              font-medium
-                              text-gray-500
+                              font-bold
+                              font-weight: 800
+                              text-black-500
                               uppercase
                               tracking-wider
                             "
@@ -147,8 +148,9 @@
                               px-6
                               py-3
                               text-left text-xs
-                              font-medium
-                              text-gray-500
+                              font-bold
+                              font-weight: 800
+                              text-black-500
                               uppercase
                               tracking-wider
                             "
@@ -161,8 +163,9 @@
                               px-6
                               py-3
                               text-left text-xs
-                              font-medium
-                              text-gray-500
+                              font-bold
+                              font-weight: 800
+                              text-black-500
                               uppercase
                               tracking-wider
                             "
@@ -175,8 +178,9 @@
                               px-6
                               py-3
                               text-left text-xs
-                              font-medium
-                              text-gray-500
+                              font-bold
+                              font-weight: 800
+                              text-black-500
                               uppercase
                               tracking-wider
                             "
@@ -189,8 +193,9 @@
                               px-6
                               py-3
                               text-left text-xs
-                              font-medium
-                              text-gray-500
+                              font-bold
+                              font-weight: 800
+                              text-black-500
                               uppercase
                               tracking-wider
                             "
@@ -205,31 +210,32 @@
                               px-6
                               py-3
                               text-left text-xs
-                              font-medium
-                              text-gray-500
+                              font-bold
+                              font-weight: 800
+                              text-black-500
                               uppercase
                               tracking-wider
                             "
                           ></th>
                         </tr>
                       </thead>
-                      <tbody class="bg-white divide-y divide-gray-200">
+                      <tbody class="bg-white divide-x divide-black-200">
                         <tr>
-                          <td class="px-6 py-4 whitespace-nowrap">
+                          <td class="px-6 py-4 font-bold font-weight:900 whitespace-nowrap">
                             {{ reading.unit.meter_no }}
                           </td>
-                          <td class="px-6 py-4 whitespace-nowrap">
+                          <td class="px-6 py-4 font-bold font-weight:900 whitespace-nowrap">
                             {{ reading.previous }}
                           </td>
-                          <td class="px-6 py-4 whitespace-nowrap">
+                          <td class="px-6 py-4 font-bold font-weight:900 whitespace-nowrap">
                             {{ reading.current }}
                           </td>
-                          <td class="px-6 py-4 whitespace-nowrap">
+                          <td class="px-6 py-4 font-bold font-weight:900 whitespace-nowrap">
                             {{
                               unitsConsumed(reading.previous, reading.current)
                             }}
                           </td>
-                          <td class="px-6 py-4 whitespace-nowrap">
+                          <td class="px-6 py-4 font-bold font-weight:900 whitespace-nowrap">
                             {{
                               chargeAmount(
                                 reading.current,

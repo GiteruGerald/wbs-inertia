@@ -214,7 +214,7 @@
                           <div class="flex-auto">
                             <input
                               v-model="unit.unit_no"
-                              type="text"
+                              type="number"
                               class="
                                 w-full
                                 focus:ring-yellow-500 focus:border-yellow-500
