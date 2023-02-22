@@ -130,7 +130,11 @@ class ApartmentController extends Controller
     public function getUnitsByApartment(Apartment $apartment)
     {
         $currentMonth = date('F');
-        $previousMonth = date("F", strtotime ( '-2 month' , strtotime ( $currentMonth ) )) ;
+        // $currentMonth = date('F',strtotime('+1 month')); testing
+
+        // return $currentMonth;
+        $previousMonth = date("F", strtotime ( '-1 month')) ;
+        // return $previousMonth;
 
         // FIXME: Try implementing this
         // $bill = $apartment->with(['bills','units','readings']) 
@@ -142,8 +146,10 @@ class ApartmentController extends Controller
                             ->join('water_readings','bills.id','=','water_readings.bill_id')
                             ->join('units','water_readings.unit_id','=','units.id')
                             ->select('units.*','units.meter_no','units.unit_no','water_readings.current')
-                            // ->orderBy('units.id', 'ASC')
-                            ->get()->sortBy(['units.unit_no']);
+                            ->orderBy('units.id', 'ASC')
+                            ->get()
+                            ->sortBy(['units.unit_no']);
+
         if(count($bill)!==0){
             return response()->json($bill);
         }else{
